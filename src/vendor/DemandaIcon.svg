@@ -1,0 +1,22 @@
+import * as React from "react"
+import { SVGProps } from "react"
+
+const LogoDemandappIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+    width={102}
+    height={47}
+    viewBox="0 0 102 47"
+    {...props}
+  >
+    <image
+      data-name="Objeto inteligente vectorial"
+      width={102}
+      height={47}
+      xlinkHref="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGYAAAAvCAYAAAARiL/GAAAFm0lEQVR4nO2ca4hVVRTHf2ss00yNLNKMGAtv2Yf0Q3UVNa0o7EsGQQyUMdeih30wApuyxAgcml4ESk9i7IsNadDD3g+U8sMYaUVFTT4mpTCzsqw0dfrHHvfIdR539nHu3ec40x8uA2f22Wud/d977bXWXucYHVjYPBK4EZgCnEj/QRuwGVhBff6zzk8laTlwTdGlk4BBJZ5+H/CH//0GbANa/e9bYIOZ/dLX0TtEzMLmS4BVwGn9iJDOEPAoUEd9Xh3/k/QKMLvMshxBHwKvu79m9k/SDqpY2DweeKOfk4KfhAuAeyLIOhe4HXgT+EHSE5LOTtJBFbDYL9+BgkXebMfCKGA+0CKpUdIZocRcNYBIcRgKXJqCXLdv1TozJ+m23ho7Yk6Jo1emMCpFZZx1ekrSKkk9OlmOmB/j6pUJbM+AEtcCH0jq1qxWeW9sIGEX8FFGnneyc7y6WzmOmCXOc0hHr1Qwn/r83iLBw1PWZyrwbOeLVdTndwIzgY3p6BUNLiC8ifr8ik4CSwWTsXC9pBuKZRVH/m71XA7kgVOPsUEvBbc6vgFWU5/vEpFLWgPMCOjnHWAZMMxv4CcDY4Bq4Hwg10eSnYkdb2a7+9BH/4EjRmFYXuqh3T4haZakpZJ2BfbZGQ919GdRR7ixZbDPS02O6Kbv8ymSVRRyXbyxBCvmBTOrDREo6QTglvZgNllGZQ8w1sz2xCOmsWWS9wDPiSbzSOx3BptC7rHiq5UgpqhvR8rLwPQEt91hZk9WJRF01GhsGQu8nyIpDoPbk5iNLbfGEmhmPwOzgE8S3HYd3l2OgQdSjraL0UBjy7BYwszsb6DGm9QQTJc0KhYx5U6r9wUjA01X2WBmW4DnAvtznEypPDGNLYMyeKQwJgWZXYLIEohATCHX5n30LGFHbF3M7Et/2hmCCbFM2WuR5ITAZQDWFrX7M/C+vQFtekNzYLtxsYh5EPg1kqzecD+FXDEZGwLv+7QMsrcEthsbh5hC7nvgSl+wkBYOAPdSyC3tJP95oLczeWeKV5ZB79AijeGxI/+h/hxiis85xcBBYBPwEoVctzNW0hxgeQ/hg3NzZ5vZu33VVdJcPxH+R4JBmyFpnaR/ff6qTdJbkiaWaxAl1YYmzY7LCnMNTa2jfQ7NZW3LiQPetq+vq6lu66lfM3MOwVRJI3wwvNPM/iqzLsEWKq4p6wYNTa1uIJzdn1NhfbYC8+pqqt+uoIySkHR3e+ahd+yO5ZV1i4am1iHAe74CtNKTZJw7xm1oak0zC3FmYLsdqRID3AVcHFGee95nGppa0yoBviiw3ba0iZmTgszTgStiC/VHAKGT8Ku0iRmfktwJKcisTZDNX582MeX2ekLxe0xh3tNbkOCWdWkTsyYluWsD2pQTyxJk2Dea2fa0iVni31+JiZV1NdVfx5InaVHCvbS9ADNVYupqqtcDc30QGAMfAzfHECRpiKSnfQI3FAc6UjapB5gcimfcZnynr0os9yshB33y9EVXUFFXU32wzP0fAUlVvhLoESDROzEuX2dmhUrqN6AgySRNkrRY0qajrCnbK+msjnHLTK6sJ/gZ6Nzq0YErfHjCisjjjyLTPcLr4zb084CJZaiBftjMDp9wZsKUdQc3C12NFXCfH4T+DLfXTjOzw3ttlolxG2e0GrAU4WrP8ma2tViFTBIj6Wrg1QyoUmm4I+6ZZtbl2DrtOKYnDISV4o6rL+uOFDJMzAUZ0KGS+NwdCppZj6WzWSVmfwZ0qATa/Ecg3J6yuVT/WSUmtP7qWIL7GMNEM1sQ8qWMrG7+F3pysjpxQrHPlz09bmZdvmNTCll2l+f5WoBjjZwdPmvuvMrVZhZa6XkEMkuMg6Rp7UV6h6rzj6YOLem5izMxIaWwbq9wxXvOs/oJ+M6/5/mFmbkatr4B+A+4j139R2/+ZQAAAABJRU5ErkJggg=="
+    />
+  </svg>
+)
+
+export default LogoDemandappIcon
