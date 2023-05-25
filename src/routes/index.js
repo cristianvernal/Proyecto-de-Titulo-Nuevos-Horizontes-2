@@ -384,12 +384,12 @@ export const protectedRoutes = [
 // Routes visible in the sidebar
 export const sidebarRoutes = [
   CollegeRoutes,
-  StudentRoutes,
-  TutorRoutes,
   EmployeeRoutes,
   GradeRoutes,
   SubjectRoutes,
-  ClassroomRoutes,
-  ScheduleRoutes,
+  StudentRoutes,
   ClassBookRoutes,
+  TutorRoutes, // sacar
+  ClassroomRoutes, // woa sacar
+  ScheduleRoutes, // horarios
 ];
