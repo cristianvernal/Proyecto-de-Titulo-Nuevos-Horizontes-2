@@ -5,12 +5,13 @@ import "firebase/analytics";
 import "firebase/storage";
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBjWmjOBKYhsXLIB2dg_XP9gGimMEZXRuY",
-  authDomain: "nuevos-horizontes-c1bf8.firebaseapp.com",
-  projectId: "nuevos-horizontes-c1bf8",
-  storageBucket: "nuevos-horizontes-c1bf8.appspot.com",
-  messagingSenderId: "742644016189",
-  appId: "1:742644016189:web:b4485f8b205d0555d5b654"
+  apiKey: "AIzaSyD7BRKrY8n7omFje6vf_5h7lt8Uv1jiOeM",
+  authDomain: "proyecto-nuevos-horizontes.firebaseapp.com",
+  projectId: "proyecto-nuevos-horizontes",
+  storageBucket: "proyecto-nuevos-horizontes.appspot.com",
+  messagingSenderId: "204351411633",
+  appId: "1:204351411633:web:3b3e95b34ed16f5c511990",
+  measurementId: "G-9410TX6F6C"
 };
 
 export const app = firebase.initializeApp(firebaseConfig);
