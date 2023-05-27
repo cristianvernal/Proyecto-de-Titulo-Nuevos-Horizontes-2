@@ -16,6 +16,9 @@ import { useFormik } from "formik";
 import { Subject } from "../models/Subject";
 import * as yup from "yup";
 import { Employee } from "../models/Employee";
+import Asignaturas from "../../src/constants/Asignaturas.json";
+import { Fullscreen } from "@material-ui/icons";
+
 
 interface Props {
   open: boolean;
@@ -61,15 +64,13 @@ export const ModalSubjects: React.FC<Props> = ({
     useFormik({
       initialValues: {
         Sigla: selected?.Sigla || "",
-        Asignatura: selected?.Asignatura || "",
+        Asignatura: "",
         Horas: selected?.Horas || 0,
         ProfesorId: selected?.ProfesorId || "",
       },
       onSubmit: (values) => {
-        selected
-                ? onEdit({...values, id: selected.id})
-                : onAccept(values);
-                handleClose();
+        selected ? onEdit({ ...values, id: selected.id }) : onAccept(values);
+        handleClose();
       },
       validationSchema: yup.object().shape({
         Sigla: yup.string().required("Este campo es requerido"),
@@ -116,7 +117,7 @@ export const ModalSubjects: React.FC<Props> = ({
           error={touched.Sigla && Boolean(errors.Sigla)}
           helperText={touched.Sigla && errors.Sigla}
         />
-        <TextField
+        {/* <TextField
           type="text"
           autoFocus
           label="Asignatura"
@@ -128,13 +129,53 @@ export const ModalSubjects: React.FC<Props> = ({
           onChange={handleChange}
           error={touched.Asignatura && Boolean(errors.Asignatura)}
           helperText={touched.Asignatura && errors.Asignatura}
-        />
+        /> */}
+
+        <Box  display="flex" style={{ flexDirection: "column" }}>
+          <Box>
+            <Typography variant="caption">Asignatura</Typography>
+          </Box>
+        </Box>
+        <Box>
+        <FormControl
+            fullWidth={true}
+            error={touched.Asignatura && Boolean(errors.Asignatura)}
+          >
+            <Select
+              id="Asignaturas"
+              autoComplete="on"
+              autoFocus
+              name="Asignaturas"
+              fullWidth={true}
+              variant="outlined"
+              value={values.Asignatura}
+              onChange={(e) => {
+                handleChange(e);
+              }}
+              inputProps={{
+                name: "Asignatura"
+               
+              }}
+            >
+              {Asignaturas.Asignaturas.map((asignatura) => (
+                <MenuItem
+                  key={asignatura}
+                  value={asignatura}
+                >{`${asignatura}`}</MenuItem>
+              ))}
+            </Select>
+            <FormHelperText>
+              {touched.Asignatura && errors.Asignatura}
+            </FormHelperText>
+          </FormControl>
+        </Box>
+
         <TextField
           type="number"
           autoFocus
           label="Horas"
           id="Horas"
-          fullWidth
+          fullWidth={true}
           style={{ marginTop: 10 }}
           variant="outlined"
           value={values.Horas}
@@ -156,6 +197,7 @@ export const ModalSubjects: React.FC<Props> = ({
               id="ProfesorId"
               autoComplete="on"
               name="ProfesorId"
+              fullWidth={true}
               variant="outlined"
               value={values.ProfesorId}
               onChange={(e) => {
@@ -179,14 +221,14 @@ export const ModalSubjects: React.FC<Props> = ({
           </FormControl>
         </Box>
         <Box display="flex" justifyContent="flex-end" paddingTop="10%">
-            <Button
-              style={{ marginRight: 20 }}
-              variant="contained"
-              type="submit"
-              color="primary"
-            >
-              Guardar
-            </Button>
+          <Button
+            style={{ marginRight: 20 }}
+            variant="contained"
+            type="submit"
+            color="primary"
+          >
+            Guardar
+          </Button>
           <Button variant="contained" onClick={handleClose}>
             Cancelar
           </Button>

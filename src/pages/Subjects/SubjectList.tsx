@@ -57,6 +57,8 @@ import {
 import { ModalSubjects } from "../../components/ModalSubjects";
 import { GetTeachers } from "../../redux/actions/employeeActions";
 import { EmployeeState } from "../../redux/reducers/employeeReducer";
+import { Employee } from "../../models/Employee";
+
   
 
   
@@ -83,6 +85,7 @@ const ContentCard = () => {
   const bloqueado = red[300];
   const [sortBy, setSortBy] = useState("Nombre_lower");
   const [subjectData, setSubjectData] = useState<any>(null);
+  const [employeeData, setEmployeeData] = useState<any>(null);
   const [currentFilter, setCurrentFilter] = useState<any>({});
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
   const [modalState, setModalState] = useState({
@@ -256,6 +259,7 @@ const ContentCard = () => {
               <TableHead>
                 <TableRow>
                   <TableCell align="left">Nombre</TableCell>
+                  <TableCell align="center">Profesor</TableCell>
                   <TableCell align="center">Acciones</TableCell>
                 </TableRow>
               </TableHead>
@@ -271,7 +275,8 @@ const ContentCard = () => {
                     .map((data: Subject) => (
                       <Fade key={data.id} in={true}>
                         <TableRow hover className={classes.styledRow}>
-                          <TableCell align="left">{data?.Asignatura}</TableCell>
+                          <TableCell align="left">{data.Asignatura}</TableCell>
+                          <TableCell align="center">{data?.TeacherId?.Nombre}</TableCell>
                           <TableCell align="center">
                             <Box style={{ justifyContent: "flex-start" }}>
                               <Tooltip title="Editar">

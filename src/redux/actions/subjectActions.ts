@@ -29,6 +29,8 @@ export const getSubjects = (
         .orderBy(order, "desc")
         .get();
 
+        
+
       // Without limit
       const responseTotal = await firestore.collection("Asignaturas").get();
 
@@ -53,6 +55,7 @@ export const getSubjects = (
     }
   };
 };
+
 export const getMoreSubjects = (
   limit: number = types.TABLE_LIMIT_DEFAULT
 ): AppThunk => {
