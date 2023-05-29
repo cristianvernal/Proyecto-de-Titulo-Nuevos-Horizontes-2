@@ -28,7 +28,7 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { green, red } from "@material-ui/core/colors";
-import { Edit, ExpandLess, ExpandMore } from "@material-ui/icons";
+import { CalendarToday, Edit, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { Autocomplete } from "@material-ui/lab";
 import { spacing } from "@material-ui/system";
 import React, { useEffect, useState } from "react";
@@ -174,7 +174,7 @@ const ContentCard = () => {
       <CardHeader
         action={
           <>
-            <Button
+            {/* <Button
               startIcon={<AddIcon />}
               style={{
                 backgroundColor: "#007ac9",
@@ -185,7 +185,7 @@ const ContentCard = () => {
               onClick={() => history.push("/cursosHorario/Crear")}
             >
               Crear Horario
-            </Button>
+            </Button> */}
           </>
         }
       />
@@ -226,6 +226,15 @@ const ContentCard = () => {
                           </TableCell>
                           <TableCell align="center">
                             <Box style={{ justifyContent: "flex-start" }}>
+                            <Tooltip title="Agregar Horario">
+                                <IconButton
+                                  color="primary"
+                                  size="small"
+                                  onClick={() => history.push("/cursosHorario/Crear")}
+                                >
+                                  <CalendarToday />
+                                </IconButton>
+                              </Tooltip>
                               <Tooltip title="Editar">
                                 <IconButton
                                   color="primary"
@@ -458,11 +467,11 @@ export const GradesScheduleList = () => {
     <React.Fragment>
       <Helmet title="Horarios de Cursos" />
       <Typography variant="h3" gutterBottom display="inline">
-        Lista de Cursos
+        Horarios
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-        <Typography>Lista de Cursos</Typography>
+        <Typography>Horarios</Typography>
       </Breadcrumbs>
 
       <Divider my={6} />

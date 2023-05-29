@@ -18,6 +18,7 @@ import UserDropdown from "./UserDropdown";
 
 const AppBar = styled(MuiAppBar)`
   background: ${(props) => props.theme.header.background};
+  
   color: ${(props) => props.theme.header.color};
 `;
 

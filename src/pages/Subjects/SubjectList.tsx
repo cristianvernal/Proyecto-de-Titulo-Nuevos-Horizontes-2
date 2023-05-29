@@ -258,7 +258,7 @@ const ContentCard = () => {
             <Table size="small" stickyHeader>
               <TableHead>
                 <TableRow>
-                  <TableCell align="left">Nombre</TableCell>
+                  <TableCell align="left">Asignatura</TableCell>
                   <TableCell align="center">Profesor</TableCell>
                   <TableCell align="center">Acciones</TableCell>
                 </TableRow>
@@ -276,7 +276,7 @@ const ContentCard = () => {
                       <Fade key={data.id} in={true}>
                         <TableRow hover className={classes.styledRow}>
                           <TableCell align="left">{data.Asignatura}</TableCell>
-                          <TableCell align="center">{data?.TeacherId?.Nombre}</TableCell>
+                          <TableCell align="center">{`${data?.TeacherData?.Nombre} ${data?.TeacherData?.ApPaterno} ${data?.TeacherData?.ApMaterno}` }</TableCell> 
                           <TableCell align="center">
                             <Box style={{ justifyContent: "flex-start" }}>
                               <Tooltip title="Editar">

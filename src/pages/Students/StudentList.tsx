@@ -192,11 +192,14 @@ const ContentCard = () => {
                     .map((data: Student) => (
                       <Fade key={data.id} in={true}>
                         <TableRow hover className={classes.styledRow}>
-                          <TableCell align="left">{`${data?.Nombre} ${data?.ApPaterno} ${data?.ApMaterno}`}</TableCell>
+                          <TableCell align="left">{`${data?.Nombres} ${data?.Apellidos}`}</TableCell>
                           <TableCell align="center">{data?.Rut}</TableCell>
-                          <TableCell align="center">{data?.TutorData &&  `${data.TutorData.Nombre} ${data.TutorData.ApPaterno} ${data.TutorData.ApMaterno}`}</TableCell>
-                          <TableCell align="center">
+                          <TableCell align="center">{data?.Tutor}</TableCell>
+                          {/* <TableCell align="center">
                             {data?.GradeData && `${data.GradeData.Grado} - ${data.GradeData.Paralelo}` }
+                          </TableCell> */}
+                          <TableCell align="center">
+                            {data?.GradeData && `${data.GradeData.Grado}` }
                           </TableCell>
                           <TableCell align="center">
                             {data?.CollegeData && data.CollegeData.Nombre} 

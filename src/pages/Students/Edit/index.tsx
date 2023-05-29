@@ -105,10 +105,9 @@ const StudentForm = () => {
     setValues,
   } = useFormik<Partial<Student>>({
     initialValues: {
-        Nombre: "",
-        ApPaterno: "",
-        ApMaterno: "",
-        TutorId: "",
+        Nombres: "",
+        Apellidos: "",
+        Tutor: "",
         Rut: "",
         FechaNacimiento: "",
         Edad: 0,
@@ -120,10 +119,9 @@ const StudentForm = () => {
       dispatch(EditStudent(values));
     },
     validationSchema: yup.object({
-        Nombre: yup.string().required("Este campo es obligatorio"),
-        ApPaterno: yup.string().required("Este campo es obligatorio"),
-        ApMaterno: yup.string().required("Este campo es obligatorio"),
-        TutorId: yup.string().required("Este campo es obligatorio"),
+        Nombres: yup.string().required("Este campo es obligatorio"),
+        Apellidos: yup.string().required("Este campo es obligatorio"),      
+        Tutor: yup.string().required("Este campo es obligatorio"),
         Rut: yup.string().required("Este campo es obligatorio"),
         FechaNacimiento: yup.string().required("Este campo es obligatorio"),
         Edad: yup.number().required("Este campo es obligatorio"),
@@ -137,10 +135,9 @@ console.log(StudentList);
     if (selected) {
       setValues({
         id: selected?.id,
-        Nombre: selected?.Nombre,
-        ApPaterno: selected?.ApPaterno,
-        ApMaterno: selected?.ApMaterno,
-        TutorId: selected?.TutorId,
+        Nombres: selected?.Nombres,
+        Apellidos: selected?.Apellidos,
+        Tutor: selected?.Tutor,
         Rut: selected?.Rut,
         FechaNacimiento: selected?.FechaNacimiento,
         Edad: selected?.Edad,
@@ -161,75 +158,35 @@ console.log(StudentList);
             <Grid container spacing={4}>
               <Grid item xs={3}>
                 <TextField
-                  id="Nombre"
-                  label="Nombre"
+                  id="Nombres"
+                  label="Nombres"
                   onChange={handleChange}
-                  value={values.Nombre}
-                  helperText={touched.Nombre && errors.Nombre}
-                  error={touched.Nombre && Boolean(errors.Nombre)}
+                  value={values.Nombres}
+                  helperText={touched.Nombres && errors.Nombres}
+                  error={touched.Nombres && Boolean(errors.Nombres)}
                 />
               </Grid>
 
               <Grid item xs={3}>
                 <TextField
-                  id="ApPaterno"
-                  label="Apellido Paterno"
+                  id="Apellidos"
+                  label="Apellidos"
                   onChange={handleChange}
-                  value={values.ApPaterno}
-                  helperText={touched.ApPaterno && errors.ApPaterno}
-                  error={touched.ApPaterno && Boolean(errors.ApPaterno)}
+                  value={values.Apellidos}
+                  helperText={touched.Apellidos && errors.Apellidos}
+                  error={touched.Apellidos && Boolean(errors.Apellidos)}
                 />
               </Grid>
 
               <Grid item xs={3}>
                 <TextField
-                  id="ApMaterno"
-                  label="Apellido Materno"
+                  id="Tutor"
+                  label="Tutor"
                   onChange={handleChange}
-                  value={values.ApMaterno}
-                  helperText={touched.ApMaterno && errors.ApMaterno}
-                  error={touched.ApMaterno && Boolean(errors.ApMaterno)}
+                  value={values.Tutor}
+                  helperText={touched.Tutor && errors.Tutor}
+                  error={touched.Tutor && Boolean(errors.Tutor)}
                 />
-              </Grid>
-
-              <Grid item xs={3}>
-                <Box display="flex" style={{ flexDirection: "column" }}>
-                  <Box>
-                    <Typography variant="caption">Apoderado o tutor</Typography>
-                  </Box>
-                </Box>
-                <Box >
-          <FormControl
-            style={{minWidth: 177}}
-            /*fullWidth={true}*/
-            error={touched.TutorId && Boolean(errors.TutorId)}
-          >
-            <Select
-              id="TutorId"
-              autoComplete="on"
-              name="TutorId"
-              
-              value={values.TutorId}
-              onChange={(e) => {
-                handleChange(e);
-              }}
-              inputProps={{
-                name: "TutorId",
-                id: "TutorId",
-              }}
-            >
-              {tutors.map((tutor) => (
-                <MenuItem
-                  key={tutor.id}
-                  value={tutor.id}
-                >{`${tutor.Nombre} ${tutor.ApPaterno} ${tutor.ApPaterno}`}</MenuItem>
-              ))}
-            </Select>
-            <FormHelperText>
-              {touched.TutorId && errors.TutorId}
-            </FormHelperText>
-          </FormControl>
-        </Box>
               </Grid>
 
               <Grid item xs={3}>

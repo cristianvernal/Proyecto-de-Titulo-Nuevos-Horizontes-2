@@ -188,7 +188,6 @@ const ContentCard = () => {
   );
 };
 
-
 export const ScheduleList = () => {
   return (
     <React.Fragment>
@@ -199,7 +198,7 @@ export const ScheduleList = () => {
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
         <Link component={NavLink} exact to={"/cursosHorario"}>
-          Lista de Cursos
+          Horarios
         </Link>
         <Typography>Crear Horario</Typography>
       </Breadcrumbs>

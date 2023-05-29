@@ -80,7 +80,7 @@ export const ModalGrades: React.FC<Props> = ({
       <TextField
         type="text"
         autoFocus
-        label="Grado"
+        label="Curso"
         id="grade"
         fullWidth={true}
         variant="outlined"
@@ -94,7 +94,7 @@ export const ModalGrades: React.FC<Props> = ({
       <TextField
         type="text"
         autoFocus
-        label="Paralelo"
+        label="Número Sala"
         id="parallel"
         fullWidth={true}
         style={{ marginTop: 10 }}
@@ -108,7 +108,7 @@ export const ModalGrades: React.FC<Props> = ({
       />
       <Box display="flex" justifyContent="flex-start" marginTop={2}>
         <Box>
-          <Typography variant="caption">Profesor</Typography>
+          <Typography variant="caption">Profesor Jefe</Typography>
         </Box>
       </Box>
       <Box>

@@ -141,6 +141,9 @@ const SubjectRoutes = {
   children: null,
 };
 
+
+
+
 const ClassroomRoutes = {
   id: "Salas",
   path: "/salas",
@@ -234,6 +237,7 @@ const ScheduleSubRoutes = {
       guard: AuthGuard,
       component: EditScheduleList,
     },
+    
   ],
 };
 
@@ -379,17 +383,18 @@ export const protectedRoutes = [
   ScheduleRoutes,
   ScheduleSubRoutes,
   GradesSubRoutes,
+  UsersRoutes,
+  
 ];
 
 // Routes visible in the sidebar
 export const sidebarRoutes = [
+  UsersRoutes,
   CollegeRoutes,
   EmployeeRoutes,
+  StudentRoutes,
   GradeRoutes,
   SubjectRoutes,
-  StudentRoutes,
   ClassBookRoutes,
-  TutorRoutes, // sacar
-  ClassroomRoutes, // woa sacar
   ScheduleRoutes, // horarios
 ];

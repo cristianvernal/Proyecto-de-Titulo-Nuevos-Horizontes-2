@@ -34,8 +34,15 @@ export const getSubjects = (
       // Without limit
       const responseTotal = await firestore.collection("Asignaturas").get();
 
+      const employeeRef = await firestore.collection("Trabajadores").where("Tipo","==","Profesor").get();
+      const employeeList = employeeRef.docs.map((x) => ({
+        ...x.data(),
+        id: x.id,
+      }));
+
       const subjectlist = response.docs.map((x) => ({
         ...x.data(),
+        TeacherData: employeeList.find((y) => y.id === x.data().ProfesorId),
         id: x.id,
       }));
       dispatch({

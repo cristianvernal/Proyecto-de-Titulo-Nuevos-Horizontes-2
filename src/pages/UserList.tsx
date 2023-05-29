@@ -43,6 +43,7 @@ import {
 import { RootState } from "../redux/reducers/rootReducer";
 import { IUsersState, usersReducer } from "../redux/reducers/usersReducer";
 import { useStyles } from "../theme/useStyles";
+import AddIcon from '@material-ui/icons/Add';
 import {
   cleanString,
   exportToCsv,
@@ -82,6 +83,8 @@ const ContentCard = () => {
     dispatch(getUsers(limit, order));
   };
 
+  
+
   const { limit, page, handleLimitChange, handlePageChange } = useTable({
     limit: TABLE_LIMIT_DEFAULT || 5,
     onLimitChange: (e, newLimit) => {
@@ -111,44 +114,61 @@ const ContentCard = () => {
     <>
       <CardHeader
         action={
+          <>
           <Button
-            startIcon={<Download />}
+            startIcon={<AddIcon />}
             style={{
               backgroundColor: "#007ac9",
               color: "#fff",
               marginInlineEnd: 20,
+              marginLeft: 10,
             }}
-            variant="contained"
-            onClick={() =>
-              exportToCsv(
-                "usuarios.csv",
-                users,
-                [
-                  "Nombre",
-                  "Apellido",
-                  "Email",
-                  "Telefono",
-                  "FechaCreacion",
-                  "Direccion",
-                  "Estado",
-                  "TipoUsuario"
-                ],
-                [
-                  "Nombre",
-                  "Apellido",
-                  "Email",
-                  "Telefono",
-                  "Fecha De Registro",
-                  "Direccion",
-                  "Estado",
-                  "Tipo Usuario"
-                ]
-              )
-            }
+            // onClick={() => {
+            //   handleOpenCreateModal();
+            // }}
           >
-            Exportar CSV
+            Agregar Usuario
           </Button>
+        </>
+          // <Button
+          //   startIcon={<Download />}
+          //   style={{
+          //     backgroundColor: "#007ac9",
+          //     color: "#fff",
+          //     marginInlineEnd: 20,
+          //   }}
+          //   variant="contained"
+          //   onClick={() =>
+          //     exportToCsv(
+          //       "usuarios.csv",
+          //       users,
+          //       [
+          //         "Nombre",
+          //         "Apellido",
+          //         "Email",
+          //         "Telefono",
+          //         "FechaCreacion",
+          //         "Direccion",
+          //         "Estado",
+          //         "TipoUsuario"
+          //       ],
+          //       [
+          //         "Nombre",
+          //         "Apellido",
+          //         "Email",
+          //         "Telefono",
+          //         "Fecha De Registro",
+          //         "Direccion",
+          //         "Estado",
+          //         "Tipo Usuario"
+          //       ]
+          //     )
+          //   }
+          // >
+          //   Exportar CSV
+          // </Button>
         }
+        
       />
       <Card mb={6}>
         <FilterSection //filtros

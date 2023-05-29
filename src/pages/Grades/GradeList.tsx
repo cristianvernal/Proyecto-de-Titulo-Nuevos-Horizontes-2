@@ -192,6 +192,7 @@ const ContentCard = () => {
     edit: { state: editState },
   } = useSelector<RootState, GradeState>((state) => state.gradeReducer);
 
+
   useEffect(() => {
     if (addState === FormState.Success) {
       setModalState({
@@ -248,9 +249,9 @@ const ContentCard = () => {
             <Table size="small" stickyHeader>
               <TableHead>
                 <TableRow>
-                  <TableCell align="left">Grado</TableCell>
-                  <TableCell align="center">Paralelo</TableCell>
-                  <TableCell align="center">Profesor</TableCell>
+                  <TableCell align="left">Curso</TableCell>
+                  <TableCell align="center">Número Sala</TableCell>
+                  <TableCell align="center">Profesor Jefe</TableCell>
                   <TableCell align="center">Acciones</TableCell>
                 </TableRow>
               </TableHead>
@@ -271,7 +272,7 @@ const ContentCard = () => {
                           <TableCell align="center">{`${data?.TeacherData?.Nombre} ${data?.TeacherData?.ApPaterno} ${data?.TeacherData?.ApMaterno}` }</TableCell> 
                           <TableCell align="center">
                             <Box style={{ justifyContent: "flex-start" }}>
-                            <Tooltip title="Administrar Estudiantes">
+                            <Tooltip title="Visualizar Estudiantes">
                                 <IconButton
                                   color="primary"
                                   size="small"

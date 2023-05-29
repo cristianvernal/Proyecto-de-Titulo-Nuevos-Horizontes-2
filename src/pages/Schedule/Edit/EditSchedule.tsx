@@ -171,6 +171,7 @@ const ContentCard = () => {
       </Dialog>
     </>
   );
+  
 };
 
 export const EditScheduleList = () => {

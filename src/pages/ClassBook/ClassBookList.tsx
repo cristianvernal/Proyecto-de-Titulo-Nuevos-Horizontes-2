@@ -209,11 +209,11 @@ const ContentCard = () => {
               <TableHead>
                 <TableRow>
                   <TableCell align="left">Curso</TableCell>
-                  <TableCell align="left">Paralelo</TableCell>
+                  <TableCell align="center">Numero Sala</TableCell>
                   <TableCell align="center">Profesor Jefe</TableCell>
-                  <TableCell align="center">Calificaciones</TableCell>
-                  <TableCell align="center">Asistencias</TableCell>
-                  <TableCell align="center">Anotaciones</TableCell>
+                  <TableCell align="center">Ingresar</TableCell>
+                  {/* <TableCell align="center">Asistencias</TableCell>
+                  <TableCell align="center">Anotaciones</TableCell> */}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -229,13 +229,13 @@ const ContentCard = () => {
                       <Fade key={data.id} in={true}>
                         <TableRow hover className={classes.styledRow}>
                           <TableCell align="left">{data?.Grado}</TableCell>
-                          <TableCell align="left">{data?.Paralelo}</TableCell>
+                          <TableCell align="center">{data?.Paralelo}</TableCell>
                           <TableCell align="center">{`${data?.TeacherData?.Nombre} ${data?.TeacherData?.ApPaterno} ${data?.TeacherData?.ApMaterno}`}</TableCell>
                           <TableCell align="center">
                             <Box style={{ justifyContent: "flex-start" }}>
-                              <Tooltip title="Calificaciones">
+                              <Tooltip title="Ingresar">
                                 <Button
-                                  startIcon={<AddIcon />}
+                                    startIcon={<AddIcon />}
                                   style={{
                                     backgroundColor: "#007ac9",
                                     color: "#fff",
@@ -249,7 +249,7 @@ const ContentCard = () => {
                               </Tooltip>
                             </Box>
                           </TableCell>
-                          <TableCell align="center">
+                          {/* <TableCell align="center">
                             <Box style={{ justifyContent: "flex-start" }}>
                               <Tooltip title="Asistencias">
                               <Button
@@ -284,7 +284,7 @@ const ContentCard = () => {
                                 ></Button>
                               </Tooltip>
                             </Box>
-                          </TableCell>
+                          </TableCell> */}
                         </TableRow>
                       </Fade>
                     ))}

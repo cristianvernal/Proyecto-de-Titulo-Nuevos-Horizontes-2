@@ -105,28 +105,28 @@ const StudentForm = () => {
   const { handleSubmit, values, handleChange, touched, setFieldValue, errors } =
     useFormik<Partial<Student>>({
       initialValues: {
-        Nombre: "",
-        ApPaterno: "",
-        ApMaterno: "",
+        Nombres: "",
+        Apellidos: "",
         Rut: "",
-        TutorId: "",
+        Tutor: "",
         FechaNacimiento: "",
         Edad: 0,
         Direccion: "",
         CollegeId: "",
+        GradeId: "",
       },
       onSubmit: (values) => {
         dispatch(AddStudent(values));
       },
       validationSchema: yup.object({
-        Nombre: yup.string().required("Este campo es obligatorio"),
-        ApPaterno: yup.string().required("Este campo es obligatorio"),
-        ApMaterno: yup.string().required("Este campo es obligatorio"),
-        TutorId: yup.string().required("Este campo es obligatorio"),
+        Nombres: yup.string().required("Este campo es obligatorio"),
+        Apellidos: yup.string().required("Este campo es obligatorio"),        
+        Tutor: yup.string().required("Este campo es obligatorio"),
         Rut: yup.string().required("Este campo es obligatorio"),
         FechaNacimiento: yup.string().required("Este campo es obligatorio"),
         Edad: yup.number().required("Este campo es obligatorio"),
         Direccion: yup.string().required("Este campo es obligatorio"),
+        GradeId: yup.string().required("Este campo es obligatorio"),
         CollegeId: yup.string().required("Este campo es requerido"),
       }),
     });
@@ -140,94 +140,22 @@ const StudentForm = () => {
             <Grid container spacing={4}>
               <Grid item xs={3}>
                 <TextField
-                  id="Nombre"
-                  label="Nombre"
+                  id="Nombres"
+                  label="Nombres"
                   onChange={handleChange}
-                  value={values.Nombre}
-                  helperText={touched.Nombre && errors.Nombre}
-                  error={touched.Nombre && Boolean(errors.Nombre)}
+                  value={values.Nombres}
+                  helperText={touched.Nombres && errors.Nombres}
+                  error={touched.Nombres && Boolean(errors.Nombres)}
                 />
               </Grid>
               <Grid item xs={3}>
                 <TextField
-                  id="ApPaterno"
-                  label="Apellido paterno"
+                  id="Apellidos"
+                  label="Apellidos"
                   onChange={handleChange}
-                  value={values.ApPaterno}
-                  helperText={touched.ApPaterno && errors.ApPaterno}
-                  error={touched.ApPaterno && Boolean(errors.ApPaterno)}
-                />
-              </Grid>
-              <Grid item xs={3}>
-                <TextField
-                  id="ApMaterno"
-                  label="Apellido materno"
-                  onChange={handleChange}
-                  value={values.ApMaterno}
-                  helperText={touched.ApMaterno && errors.ApMaterno}
-                  error={touched.ApMaterno && Boolean(errors.ApMaterno)}
-                />
-              </Grid>
-
-              <Grid item xs={3}>
-                <Box display="flex" style={{ flexDirection: "column" }}>
-                  <Box>
-                    <Typography variant="caption">Apoderado o tutor</Typography>
-                  </Box>
-                </Box>
-                <Box >
-          <FormControl
-            style={{minWidth: 177}}
-            /*fullWidth={true}*/
-            error={touched.TutorId && Boolean(errors.TutorId)}
-          >
-            <Select
-              id="TutorId"
-              autoComplete="on"
-              name="TutorId"
-              
-              value={values.TutorId}
-              onChange={(e) => {
-                handleChange(e);
-              }}
-              inputProps={{
-                name: "TutorId",
-                id: "TutorId",
-              }}
-            >
-              {tutors.map((tutor) => (
-                <MenuItem
-                  key={tutor.id}
-                  value={tutor.id}
-                >{`${tutor.Nombre} ${tutor.ApPaterno} ${tutor.ApPaterno}`}</MenuItem>
-              ))}
-            </Select>
-            <FormHelperText>
-              {touched.TutorId && errors.TutorId}
-            </FormHelperText>
-          </FormControl>
-        </Box>
-              </Grid>
-
-              
-              <Grid item xs={3}>
-                <TextField
-                  id="Direccion"
-                  label="Direccion"
-                  onChange={handleChange}
-                  value={values.Direccion}
-                  helperText={touched.Direccion && errors.Direccion}
-                  error={touched.Direccion && Boolean(errors.Direccion)}
-                />
-              </Grid>
-              <Grid item xs={3}>
-                <TextField
-                  id="Rut"
-                  label="Rut"
-                  onChange={handleChange}
-                  value={values.Rut}
-                  helperText={touched.Rut && errors.Rut}
-                  error={touched.Rut && Boolean(errors.Rut)}
+                  value={values.Apellidos}
+                  helperText={touched.Apellidos && errors.Apellidos}
+                  error={touched.Apellidos && Boolean(errors.Apellidos)}
                 />
               </Grid>
               <Grid item xs={3}>
@@ -242,13 +170,76 @@ const StudentForm = () => {
               </Grid>
               <Grid item xs={3}>
                 <TextField
-                  id="Edad"
-                  label="Edad"
+                  id="Rut"
+                  label="Rut"
                   onChange={handleChange}
-                  value={values.Edad}
-                  helperText={touched.Edad && errors.Edad}
-                  error={touched.Edad && Boolean(errors.Edad)}
+                  value={values.Rut}
+                  helperText={touched.Rut && errors.Rut}
+                  error={touched.Rut && Boolean(errors.Rut)}
                 />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  id="Tutor"
+                  label="Tutor"
+                  onChange={handleChange}
+                  value={values.Tutor}
+                  helperText={touched.Tutor && errors.Tutor}
+                  error={touched.Tutor && Boolean(errors.Tutor)}
+                />
+              </Grid>
+
+              
+              <Grid item xs={3}>
+                <TextField
+                  id="Direccion"
+                  label="Direccion"
+                  onChange={handleChange}
+                  value={values.Direccion}
+                  helperText={touched.Direccion && errors.Direccion}
+                  error={touched.Direccion && Boolean(errors.Direccion)}
+                />
+              </Grid>
+             
+              
+              <Grid item xs={3}>
+                <Box display="flex" style={{ flexDirection: "column" }}>
+                  <Box>
+                    <Typography variant="caption">Curso</Typography>
+                  </Box>
+                </Box>
+                <Box >
+          <FormControl
+            style={{minWidth: 177}}
+            /*fullWidth={true}*/
+            error={touched.GradeId && Boolean(errors.GradeId)}
+          >
+            <Select
+              id="GradeId"
+              autoComplete="on"
+              name="GradeId"
+              
+              value={values.GradeId}
+              onChange={(e) => {
+                handleChange(e);
+              }}
+              inputProps={{
+                name: "GradeId",
+                id: "GradeId",
+              }}
+            >
+              {grades.map((grade) => (
+                <MenuItem
+                  key={grade.id}
+                  value={grade.id}
+                >{`${grade.Grado}`}</MenuItem>
+              ))}
+            </Select>
+            <FormHelperText>
+              {touched.GradeId && errors.GradeId}
+            </FormHelperText>
+          </FormControl>
+        </Box>
               </Grid>
 
 

@@ -81,7 +81,7 @@ const StudentForm = () => {
       const student = students.find((student) => student.id === selectedStudentId);
       if(student){
         setStudentList((prevStudentList) => [...prevStudentList, student]);
-        console.log(`Estudiante encontrado: ${student.Nombre}`)
+        console.log(`Estudiante encontrado: ${student.Nombres}`)
       }
      };
 
@@ -130,7 +130,7 @@ const StudentForm = () => {
                         <MenuItem
                           key={student.id}
                           value={student.id}
-                        >{`${student.Nombre} ${student.ApPaterno} ${student.ApPaterno}`}</MenuItem>
+                        >{`${student.Nombres} ${student.Apellidos}`}</MenuItem>
                       ))}
                     </Select>
                   </FormControl>
@@ -161,7 +161,7 @@ const StudentForm = () => {
           <TableBody>
             {studentList.map((student) => (
               <TableRow key={student.id}>
-                <TableCell>{`${student.Nombre} ${student.ApPaterno} ${student.ApPaterno}`}</TableCell>
+                <TableCell>{`${student.Nombres} ${student.Apellidos}`}</TableCell>
                 <TableCell>
                   <IconButton color="primary" aria-label="Eliminar" onClick={() => deteleStudent(student.id)}>
                     <Trash />
