@@ -81,6 +81,7 @@ const AppBarComponent = ({ onDrawerToggle }) => (
                 color="inherit"
                 aria-label="Open drawer"
                 onClick={onDrawerToggle}
+                
               >
                 <MenuIcon />
               </IconButton>

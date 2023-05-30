@@ -164,22 +164,21 @@ export function AddStudent(data: Partial<Student>): AppThunk {
       type: types.STUDENTS_ADD_SUBMITING,
     });
     try {
-
-      const responseCreate = await firestore.collection("Estudiantes").add({
+      await firestore.collection("Estudiantes").add({
         ...data,
         FechaCreacion: firebase.firestore.FieldValue.serverTimestamp(),
       });
 
-      let newArrayId = [];
+      // let newArrayId = [];
 
-      const tutorResponse = await firestore.collection("Apoderados").doc(data.TutorId).get()
-      if (tutorResponse?.data()?.StudentsId.length>0){
-        newArrayId = tutorResponse?.data()?.StudentsId
-        newArrayId.push({StudentsId: responseCreate.id})
-      } else { 
-        newArrayId.push({StudentsId: responseCreate.id})
-      } 
-      await firestore.collection("Apoderados").doc(data.TutorId).update({StudentsId: newArrayId})
+      // const tutorResponse = await firestore.collection("Apoderados").doc(data.TutorId).get()
+      // if (tutorResponse?.data()?.StudentsId.length>0){
+      //   newArrayId = tutorResponse?.data()?.StudentsId
+      //   newArrayId.push({StudentsId: responseCreate.id})
+      // } else { 
+      //   newArrayId.push({StudentsId: responseCreate.id})
+      // } 
+      // await firestore.collection("Apoderados").doc(data.TutorId).update({StudentsId: newArrayId})
       
       dispatch(getStudents());
       dispatch({

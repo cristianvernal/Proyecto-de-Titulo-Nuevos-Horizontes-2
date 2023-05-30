@@ -101,7 +101,7 @@ const StudentForm = () => {
   );
 
 
-  console.log("formulario estudiante")
+  // console.log("formulario estudiante")
   const { handleSubmit, values, handleChange, touched, setFieldValue, errors } =
     useFormik<Partial<Student>>({
       initialValues: {

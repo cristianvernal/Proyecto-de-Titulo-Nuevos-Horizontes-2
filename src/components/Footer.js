@@ -42,7 +42,7 @@ function Footer() {
         <Hidden smDown>
           <Grid container item xs={12} md={6}>
             <List>
-              {/* <ListItem button={true} component="a" href="#">
+              <ListItem button={true} component="a" href="#">
                 <ListItemText primary="Support" />
               </ListItem>
               <ListItem button={true} component="a" href="#">
@@ -53,7 +53,7 @@ function Footer() {
               </ListItem>
               <ListItem button={true} component="a" href="#">
                 <ListItemText primary="Terms of Service" />
-              </ListItem> */}
+              </ListItem>
             </List>
           </Grid>
         </Hidden>

@@ -21,7 +21,8 @@ import styled from "styled-components/macro";
 import { sidebarRoutes as routes } from "../routes/index";
 import logo from "../vendor/logotipo.png";
 import "../vendor/perfect-scrollbar.css";
-import logoDemanda from "../vendor/LogoDemanda.svg"
+import logoDemanda from "../vendor/LogoDemanda.svg";
+import icon from "../vendor/icon.png"
 
 const Drawer = styled(MuiDrawer)`
   border-right: 0;
@@ -343,7 +344,7 @@ const Sidebar = ({ classes, staticContext, location, ...rest }) => {
   return (
     <Drawer variant="permanent" {...rest}>
       <Brand component={NavLink} to="/" button>
-      {/*  <div style={{backgroundImage:`url('${logoDemanda}')`,width:192, height:64}}></div> */}
+       <div style={{backgroundImage:`url('${logoDemanda}')`,width:192, height:64}}></div> 
       </Brand>
       <Scrollbar>
         <List disablePadding>
