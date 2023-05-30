@@ -309,14 +309,14 @@ export const createEmployeeForm = () => {
     <React.Fragment>
       <Helmet title="Trabajador" />
       <Typography variant="h3" gutterBottom display="inline">
-        Lista de Trabajadores
+      Crear Trabajador
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
         <Link component={NavLink} exact to="/trabajadores">
-          Lista de Trabajadores
+          Trabajadores
         </Link>
-        <Typography>Crear trabajador</Typography>
+        <Typography>Crear Trabajador</Typography>
       </Breadcrumbs>
 
       <Divider my={6} />

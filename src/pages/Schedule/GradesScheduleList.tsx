@@ -202,7 +202,7 @@ const ContentCard = () => {
               <TableHead>
                 <TableRow>
                   <TableCell align="left">Grado</TableCell>
-                  <TableCell align="center">Paralelo</TableCell>
+                  <TableCell align="center">Sala</TableCell>
                   <TableCell align="center">Horario</TableCell>
                   <TableCell align="center">Acciones</TableCell>
                 </TableRow>

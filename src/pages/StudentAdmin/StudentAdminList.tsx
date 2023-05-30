@@ -67,6 +67,9 @@ const StudentForm = () => {
   const dispatch = useDispatch(); 
   const classes = useStyles(); 
   const [currentFilter, setCurrentFilter] = useState<any>({});
+  const {grades} = useSelector<RootState, GradeState>(
+    (state) => state.gradeReducer
+  );
   const { students } = useSelector<RootState, StudentState>(
     (state) => state.studentReducer
     );

@@ -534,11 +534,11 @@ export const EmployeeList = () => {
     <React.Fragment>
       <Helmet title="Trabajadores" />
       <Typography variant="h3" gutterBottom display="inline">
-        Lista de Trabajadores
+        Trabajadores
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-        <Typography>Lista de Trabajadores</Typography>
+        <Typography>Trabajadores</Typography>
       </Breadcrumbs>
 
       <Divider my={6} />
