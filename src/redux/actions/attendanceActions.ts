@@ -11,7 +11,7 @@ import { openSnack } from "./uiActions";
 import { Grade } from "../../models/Grade";
 import { Student } from "../../models/Student";
 import { getStudents } from "./studentActions";
-import { Attendance } from "../../models/attendance"; 
+import { Attendance } from "../../models/Attendance"; 
 
 const API_KEY = firebaseConfig.apiKey;
 const { format, addDays } = require("date-fns");

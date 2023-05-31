@@ -70,7 +70,7 @@ import {
 import { getMoreStudents, getStudents } from "../../redux/actions/studentActions";
 import { StudentState } from "../../redux/reducers/studentReducer";
 import { Student } from "../../models/Student";
-import { Attendance } from "../../models/attendance";
+import { Attendance } from "../../models/Attendance";
   
   
   const Card = styled(MuiCard)(spacing);
