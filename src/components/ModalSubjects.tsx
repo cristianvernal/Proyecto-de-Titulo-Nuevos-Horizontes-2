@@ -153,8 +153,7 @@ export const ModalSubjects: React.FC<Props> = ({
                 handleChange(e);
               }}
               inputProps={{
-                name: "Asignatura"
-               
+                name: "Asignatura"              
               }}
             >
               {Asignaturas.Asignaturas.map((asignatura) => (

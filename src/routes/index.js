@@ -401,8 +401,8 @@ export const sidebarRoutes = [
   UsersRoutes,
   CollegeRoutes,
   EmployeeRoutes,
-  StudentRoutes,
   GradeRoutes,
+  StudentRoutes,
   SubjectRoutes,
   ClassBookRoutes,
   ScheduleRoutes, // horarios

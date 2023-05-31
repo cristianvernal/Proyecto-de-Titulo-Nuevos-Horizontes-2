@@ -10,7 +10,7 @@ import {
   ListItemText,
   Typography,
 } from "@material-ui/core";
-import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import { ColorLens, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { darken, rgba } from "polished";
 import React, { useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -23,6 +23,8 @@ import logo from "../vendor/logotipo.png";
 import "../vendor/perfect-scrollbar.css";
 import logoDemanda from "../vendor/LogoDemanda.svg";
 import icon from "../vendor/icon.png"
+import logoColegio from "../vendor/logoColegio.jpg"
+import { color } from "@material-ui/system";
 
 const Drawer = styled(MuiDrawer)`
   border-right: 0;
@@ -343,8 +345,12 @@ const Sidebar = ({ classes, staticContext, location, ...rest }) => {
 
   return (
     <Drawer variant="permanent" {...rest}>
-      <Brand component={NavLink} to="/" button>
-       <div style={{backgroundImage:`url('${logoDemanda}')`,width:192, height:64}}></div> 
+      <Brand component={NavLink} to="/establecimientos" button>
+       <div style={{
+        backgroundImage:`url('${logoColegio}')`,width:192, height:64
+        
+        }}
+       ></div> 
       </Brand>
       <Scrollbar>
         <List disablePadding>
