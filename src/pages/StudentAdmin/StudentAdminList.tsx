@@ -52,9 +52,43 @@ import { TABLE_LIMIT_DEFAULT } from "../../constants";
 import { usersReducer } from "../../redux/reducers/usersReducer";
 import { FormState } from "../../models/form_state";
 import { getGrades } from "../../redux/actions/gradeActions";
-import { GradeState } from "../../redux/reducers/gradeReducer";
+import { GradeState, gradeReducer } from '../../redux/reducers/gradeReducer';
 import { Grade } from "../../models/Grade";
 import { StudentList } from "../Students/StudentList";
+import firebase from "firebase/app";
+import { firebaseConfig, firestore } from "../../firebase/firebase";
+
+
+// // const App: React.FC = () => {
+//   const [course, setCourse] = useState<Grade[]>([]);
+//   const [students, setStudents] = useState<Student[]>([]);
+//   const selectedCourseId = 1;
+
+//   useEffect(() => {
+//     const fetchCourseAndStudents = async () => {
+//       const db = firebase.firestore();
+
+  
+
+//       // Obtener los estudiantes vinculados al curso seleccionado
+//       const studentsSnapshot = await db.collection('estudiantes').where('courseId', '==', selectedCourseId).get();
+//       const students: Student[] = studentsSnapshot.docs.map((doc) => ({
+//         id: doc.id,
+//         ...doc.data(),
+//       }));
+//       setStudents(students);
+//     };
+
+//     fetchCourseAndStudents();
+//   }, [selectedCourseId]);
+
+//   // return (
+//   //   <div>
+//   //     <h1>Mi aplicación de cursos</h1>
+//   //     {course && <CourseView course={course} students={students} />}
+//   //   </div>
+//   // );
+// // };
 
 
 const Card = styled(MuiCard)(spacing);
@@ -67,6 +101,8 @@ const StudentForm = () => {
   const dispatch = useDispatch(); 
   const classes = useStyles(); 
   const [currentFilter, setCurrentFilter] = useState<any>({});
+  
+
   const {grades} = useSelector<RootState, GradeState>(
     (state) => state.gradeReducer
   );
@@ -78,13 +114,19 @@ const StudentForm = () => {
       dispatch(getStudents());
     }, []);
 
-  
+    interface CourseViewProps {
+      grades: Grade[];
+      students: Student[];
+    }
+   
+
     const addStudents = () => {
 
-      const student = students.find((student) => student.id === selectedStudentId);
+
+      const student = students.find((student) => student.Nombres === student.GradeId);
       if(student){
         setStudentList((prevStudentList) => [...prevStudentList, student]);
-        console.log(`Estudiante encontrado: ${student.Nombres}`)
+        console.log(`Estudiante encontrado: ${student}`)
       }
      };
 

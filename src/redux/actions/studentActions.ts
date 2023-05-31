@@ -9,6 +9,8 @@ import { SnackState } from "../../models/snack-state";
 import { cleanString } from "../../utils/utils";
 import { openSnack } from "./uiActions";
 import { Student } from "../../models/Student"; 
+import { Grade } from '../../models/Grade';
+import { StudentList } from '../../pages/Students/StudentList';
 
 const API_KEY = firebaseConfig.apiKey;
 const { format, addDays } = require("date-fns");
@@ -28,14 +30,14 @@ export const getStudents = (
         .orderBy(order, "desc")
         .get();
 
-      const responseTutor = await firestore
-        .collection("Apoderados")
-        .get();
+      // const responseTutor = await firestore
+      //   .collection("Apoderados")
+      //   .get();
 
-      const tutorList = responseTutor.docs.map((x) => ({
-        ...x.data(),
-        id: x.id,
-      }))
+      // const tutorList = responseTutor.docs.map((x) => ({
+      //   ...x.data(),
+      //   id: x.id,
+      // }))
 
       const responseCollege = await firestore
         .collection("Establecimientos")
@@ -59,13 +61,17 @@ export const getStudents = (
 
       // Without limit
       const responseTotal = await firestore.collection("Estudiantes").get();
+      
+      
 
       const studentlist = response.docs.map((x) => ({
         ...x.data(),
         id: x.id,
-        TutorData: tutorList.find((t: any) => t.id === x.data().TutorId),
+        // TutorData: tutorList.find((t: any) => t.id === x.data().TutorId),
         CollegeData: collegeList.find((i) => i.id === x.data().CollegeId), 
         GradeData: gradeList.find((y) => y.id === x.data().GradeId),
+        StudentData: x.data().GradeId === "Nombres" && gradeList.filter((subject: any) => subject.StudentId === x.id),
+        
       }));
       dispatch({
         type: types.STUDENTS_GET_SUCCESS,
