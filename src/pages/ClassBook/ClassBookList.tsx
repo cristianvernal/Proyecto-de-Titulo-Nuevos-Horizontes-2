@@ -243,7 +243,7 @@ const ContentCard = () => {
                                     marginLeft: 10,
                                   }}
                                   onClick={() => {
-                                    // history.push("/trabajadores/Crear");
+                                    history.push("/asistencia");
                                   }}
                                 ></Button>
                               </Tooltip>

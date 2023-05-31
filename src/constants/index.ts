@@ -353,3 +353,14 @@ export const CURRICULUMS_ADD_INITIAL = "[Curriculums] add initial";
 export const CURRICULUMS_ADD_SUBMITING = "[Curriculums] add submiting";
 export const CURRICULUMS_ADD_SUCCESS = "[Curriculums] add success";
 export const CURRICULUMS_ADD_FAILURE = "[Curriculums] add failures";
+
+
+//ATTENDANCE
+
+export const ATTENDANCES_GET_SUBMITING = "[Attendance] get submiting";
+export const ATTENDANCES_GET_FAILURE   = "[Attendance] get failure";
+export const ATTENDANCES_GET_SUCCESS   = "[Attendance] get success";
+export const ATTENDANCES_ADD_INITIAL   = "[Attendance] add initial";
+export const ATTENDANCES_ADD_SUBMITING = "[Attendance] add submiting";
+export const ATTENDANCES_ADD_SUCCESS   = "[Attendance] add success";
+export const ATTENDANCES_ADD_FAILURE   = "[Attendance] add failures";

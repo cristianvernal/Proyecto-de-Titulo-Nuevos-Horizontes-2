@@ -15,6 +15,7 @@ import { classroomReducer } from './classroomReducer';
 import { scheduleReducer } from './scheduleReducer';
 import {classBookReducer} from './classBookReducer';
 import { curriculumReducer } from "./curriculumReducer";
+import { attendanceReducer } from "./attendanceReducer";
 
 
 export const rootReducer = combineReducers({
@@ -34,6 +35,7 @@ export const rootReducer = combineReducers({
   scheduleReducer,
   classBookReducer,
   curriculumReducer,
+  attendanceReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

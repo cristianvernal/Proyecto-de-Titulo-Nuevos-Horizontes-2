@@ -47,6 +47,7 @@ import { editTutorForm } from "../pages/Tutors/Edit";
 import { TutorList } from "../pages/Tutors/TutorList";
 import { UserList } from "../pages/UserList";
 import { ViewUser } from "../pages/ViewUser";
+import { AttendanceList } from "../pages/Attendance/AttendanceList";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "../pages/auth/SignUp";
 import { GradesScheduleList } from "../pages/Schedule/GradesScheduleList";
@@ -96,6 +97,15 @@ const CollegeRoutes = {
   children: null,
 };
 
+const AttendanceRoutes = {
+  id: "Asistencia",
+  path: "/asistencia",
+  icon: <Apartment />,
+  guard: AuthGuard,
+  component: AttendanceList,
+  children: null,
+};
+
 const StudentRoutes = {
   id: "Estudiantes",
   path: "/estudiantes",
@@ -140,8 +150,6 @@ const SubjectRoutes = {
   component: SubjectList,
   children: null,
 };
-
-
 
 
 const ClassroomRoutes = {
@@ -384,6 +392,7 @@ export const protectedRoutes = [
   ScheduleSubRoutes,
   GradesSubRoutes,
   UsersRoutes,
+  AttendanceRoutes,
   
 ];
 
