@@ -36,12 +36,12 @@ const Drawer = styled(MuiDrawer)`
 `;
 
 const Scrollbar = styled(PerfectScrollbar)`
-background: ${("#d0f4de")};
+background-color: ${(props) => props.theme.sidebar.background};
   border-right: 1px solid rgba(0, 0, 0, 0.12);
 `;
 
 const List = styled(MuiList)`
-background: ${("#d0f4de")};
+background-color: ${(props) => props.theme.sidebar.background};
 `;
 
 const Items = styled.div`
@@ -54,7 +54,7 @@ const Brand = styled(ListItem)`
   font-size: ${(props) => props.theme.typography.h5.fontSize};
   font-weight: ${(props) => props.theme.typography.fontWeightMedium};
   color: ${(props) => props.theme.sidebar.header.color};
-  background: ${("#d0f4de")};
+  background-color: ${(props) => "white"};
   font-family: ${(props) => props.theme.typography.fontFamily};
   min-height: 56px;
   padding-left: ${(props) => props.theme.spacing(6)}px;
@@ -209,7 +209,8 @@ const SidebarSection = styled(Typography)`
 `;
 
 const SidebarFooter = styled.div`
-background: ${("#d0f4de")};
+background-color: ${(props) =>
+  props.theme.sidebar.footer.background} !important;
   padding: ${(props) => props.theme.spacing(2.75)}px
     ${(props) => props.theme.spacing(4)}px;
   border-right: 1px solid rgba(0, 0, 0, 0.12);

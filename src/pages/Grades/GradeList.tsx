@@ -272,7 +272,7 @@ const ContentCard = () => {
                           <TableCell align="center">{`${data?.TeacherData?.Nombre} ${data?.TeacherData?.ApPaterno} ${data?.TeacherData?.ApMaterno}` }</TableCell> 
                           <TableCell align="center">
                             <Box style={{ justifyContent: "flex-start" }}>
-                            <Tooltip title="Visualizar Estudiantes">
+                            {/* <Tooltip title="Visualizar Estudiantes">
                                 <IconButton
                                   color="primary"
                                   size="small"
@@ -280,7 +280,7 @@ const ContentCard = () => {
                                 >
                                   <Person />
                                 </IconButton>
-                              </Tooltip>
+                              </Tooltip> */}
                               <Tooltip title="Editar">
                                 <IconButton
                                   color="primary"

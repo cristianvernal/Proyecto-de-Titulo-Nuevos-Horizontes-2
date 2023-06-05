@@ -17,7 +17,7 @@ import { Menu as MenuIcon } from "@material-ui/icons";
 import UserDropdown from "./UserDropdown";
 
 const AppBar = styled(MuiAppBar)`
-  background: ${("#d0f4de")};
+background: ${(props) => props.theme.header.background};
   
   color: ${(props) => props.theme.header.color};
 `;
