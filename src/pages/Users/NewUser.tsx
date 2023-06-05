@@ -266,7 +266,7 @@ export const NewUser = React.memo(() => {
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
         <Link component={NavLink} exact to="/usuarios">
-          Listado
+          Usuarios
         </Link>
         <Typography>Crear usuario</Typography>
       </Breadcrumbs>

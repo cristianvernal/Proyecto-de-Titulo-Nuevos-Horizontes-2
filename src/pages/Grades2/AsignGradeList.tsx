@@ -372,7 +372,7 @@ const ContentCard = () => {
                           </TableCell>
                           <TableCell align="center">
                             <TextField
-                              type="number"
+                              type="text"
                               autoFocus
                               label="Nota 1"
                               id="Nota 1"
@@ -389,7 +389,7 @@ const ContentCard = () => {
                           </TableCell>
                           <TableCell align="center">
                             <TextField
-                              type="number"
+                              type="text"
                               autoFocus
                               label="Nota 2"
                               id="Nota 2"
@@ -406,7 +406,7 @@ const ContentCard = () => {
                           </TableCell>
                           <TableCell align="center">
                             <TextField
-                              type="number"
+                              type="text"
                               autoFocus
                               label="Nota 3"
                               id="Nota 3"
@@ -423,7 +423,7 @@ const ContentCard = () => {
                           </TableCell>
                           <TableCell align="center">
                             <TextField
-                              type="number"
+                              type="text"
                               autoFocus
                               label="Nota 4"
                               id="Nota 4"

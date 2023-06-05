@@ -21,7 +21,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { green, red } from "@material-ui/core/colors";
-import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import { Edit, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { Autocomplete } from "@material-ui/lab";
 import { spacing } from "@material-ui/system";
 import React, { useEffect, useState } from "react";
@@ -229,13 +229,13 @@ const ContentCard = () => {
                           </TableCell>
                           <TableCell align="center">
                             <Box style={{ justifyContent: "flex-start" }}>
-                              <Tooltip title="Ver">
+                              <Tooltip title="Editar">
                                 <IconButton
                                   color="primary"
                                   size="small"
                                   onClick={() => handleGoToViewUser(data)}
                                 >
-                                  <Eye />
+                                  <Edit />
                                 </IconButton>
                               </Tooltip>
                             </Box>
@@ -450,11 +450,11 @@ export const UserList = () => {
     <React.Fragment>
       <Helmet title="Usuarios" />
       <Typography variant="h3" gutterBottom display="inline">
-        Lista de Usuarios
+        Usuarios
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-        <Typography>Lista de Usuarios</Typography>
+        <Typography>Usuarios</Typography>
       </Breadcrumbs>
 
       <Divider my={6} />

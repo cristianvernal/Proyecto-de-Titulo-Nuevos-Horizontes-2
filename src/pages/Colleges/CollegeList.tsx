@@ -459,11 +459,11 @@ export const CollegeList = () => {
     <React.Fragment>
       <Helmet title="Establecimientos" />
       <Typography variant="h3" gutterBottom display="inline">
-        Lista de Establecimientos
+        Establecimientos
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-        <Typography>Lista de Establecimientos</Typography>
+        <Typography>Establecimientos</Typography>
       </Breadcrumbs>
 
       <Divider my={6} />

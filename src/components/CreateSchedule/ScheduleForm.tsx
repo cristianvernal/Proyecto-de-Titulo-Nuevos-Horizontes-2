@@ -78,7 +78,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({
             >
               {grades.map((grade) => (
                 <MenuItem key={grade.id} value={grade.id}>
-                  {`${grade.Grado} - ${grade.Paralelo}`}
+                  {`${grade.Grado}`}
                 </MenuItem>
               ))}
             </Select>
@@ -132,6 +132,8 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({
               id="startTime"
               label="Hora de inicio"
               type="time"
+             
+              variant="filled"
               value={horaInicio}
               onChange={(event) => setHoraInicio(event.target.value)}
               required
@@ -144,6 +146,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({
               id="endTime"
               label="Hora de fin"
               type="time"
+              variant="filled"
               value={horaFin}
               onChange={(event) => setHoraFin(event.target.value)}
               required

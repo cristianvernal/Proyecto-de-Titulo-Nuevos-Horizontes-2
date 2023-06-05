@@ -234,12 +234,12 @@ export const createCollegeForm = () => {
     <React.Fragment>
       <Helmet title="Establecimientos" />
       <Typography variant="h3" gutterBottom display="inline">
-        Lista de Establecimientos
+        Crear Establecimientos
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
         <Link component={NavLink} exact to="/establecimientos">
-          Lista de Establecimientos
+          Establecimientos
         </Link>
         <Typography>Crear establecimiento</Typography>
       </Breadcrumbs>

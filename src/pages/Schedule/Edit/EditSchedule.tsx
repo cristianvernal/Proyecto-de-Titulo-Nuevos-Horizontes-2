@@ -184,7 +184,7 @@ export const EditScheduleList = () => {
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
         <Link component={NavLink} exact to={"/cursosHorario"}>
-          Lista de Cursos
+          Horario
         </Link>
         <Typography>Editar Horario</Typography>
       </Breadcrumbs>
