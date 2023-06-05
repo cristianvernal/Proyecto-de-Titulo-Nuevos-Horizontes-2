@@ -49,6 +49,9 @@ import { StudentState } from "../../redux/reducers/studentReducer";
 import { usersReducer } from "../../redux/reducers/usersReducer";
 import { useStyles } from "../../theme/useStyles";
 import { cleanString } from "../../utils/utils";
+import {groupBy} from "lodash";
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 const Card = styled(MuiCard)(spacing);
 
@@ -73,6 +76,7 @@ const ContentCard = () => {
   const [sortBy, setSortBy] = useState("Nombre_lower");
   const [subjectData, setSubjectData] = useState<any>(null);
   const [currentFilter, setCurrentFilter] = useState<any>({});
+  const [estudiantes, setEstudiantes] = useState<any[]>([]);
 
   const handleOpenConfirm = () => {
     setOpenConfirm(true);
@@ -122,6 +126,8 @@ const ContentCard = () => {
       }
     },
   });
+
+
 
   useEffect(() => {
     dispatch(getStudents());

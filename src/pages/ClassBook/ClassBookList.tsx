@@ -30,10 +30,14 @@ import AddIcon from "@material-ui/icons/Add";
 import { green, red } from "@material-ui/core/colors";
 import {
   Edit,
+  EmojiObjects,
   ExpandLess,
   ExpandMore,
   ListAlt,
   PersonAdd,
+  PersonAddDisabledTwoTone,
+  PersonAddTwoTone,
+  Star,
 } from "@material-ui/icons";
 import { Autocomplete } from "@material-ui/lab";
 import { spacing } from "@material-ui/system";
@@ -211,7 +215,8 @@ const ContentCard = () => {
                   <TableCell align="left">Curso</TableCell>
                   <TableCell align="center">Numero Sala</TableCell>
                   <TableCell align="center">Profesor Jefe</TableCell>
-                  <TableCell align="center">Ingresar</TableCell>
+                  <TableCell align="center">Acciones</TableCell>
+                
                   {/* <TableCell align="center">Asistencias</TableCell>
                   <TableCell align="center">Anotaciones</TableCell> */}
                 </TableRow>
@@ -233,19 +238,43 @@ const ContentCard = () => {
                           <TableCell align="center">{`${data?.TeacherData?.Nombre} ${data?.TeacherData?.ApPaterno} ${data?.TeacherData?.ApMaterno}`}</TableCell>
                           <TableCell align="center">
                             <Box style={{ justifyContent: "flex-start" }}>
-                              <Tooltip title="Ingresar">
-                                <Button
-                                    startIcon={<AddIcon />}
-                                  style={{
-                                    backgroundColor: "#007ac9",
-                                    color: "#fff",
-                                    marginInlineEnd: 20,
-                                    marginLeft: 10,
-                                  }}
+                            <Tooltip title="Asistencia">
+                                <IconButton
+                                  color="primary"
+                                  size="small"
                                   onClick={() => {
                                     history.push("/asistencia");
+                                    /* aqui */
                                   }}
-                                ></Button>
+                                >
+                                  <PersonAddTwoTone />
+                                </IconButton>
+                              </Tooltip>
+
+                              <Tooltip title="Notas">
+                                <IconButton
+                                  color="primary"
+                                  size="small"
+                                  onClick={() => {
+                                    history.push("/notas");
+                                    /* aqui */
+                                  }}
+                                >
+                                  <Star />
+                                </IconButton>
+                              </Tooltip>
+
+                              <Tooltip title="Observaciones">
+                                <IconButton
+                                  color="primary"
+                                  size="small"
+                                  // onClick={() => {
+                                  //   handleGoToEdit(data);
+                                  //   /* aqui */
+                                  // }}
+                                >
+                                  <EmojiObjects />
+                                </IconButton>
                               </Tooltip>
                             </Box>
                           </TableCell>

@@ -211,7 +211,7 @@ console.log(StudentList);
                 />
               </Grid>
 
-              <Grid item xs={3}>
+              {/* <Grid item xs={3}>
                 <TextField
                   id="Edad"
                   label="Edad"
@@ -220,7 +220,7 @@ console.log(StudentList);
                   helperText={touched.Edad && errors.Edad}
                   error={touched.Edad && Boolean(errors.Edad)}
                 />
-              </Grid>
+              </Grid> */}
 
               <Grid item xs={3}>
                 <TextField
@@ -232,7 +232,45 @@ console.log(StudentList);
                   error={touched.Direccion && Boolean(errors.Direccion)}
                 />
               </Grid>
-
+              <Grid item xs={3}>
+                <Box display="flex" style={{ flexDirection: "column" }}>
+                  <Box>
+                    <Typography variant="caption">Curso</Typography>
+                  </Box>
+                </Box>
+                <Box >
+          <FormControl
+            style={{minWidth: 177}}
+            /*fullWidth={true}*/
+            error={touched.GradeId && Boolean(errors.GradeId)}
+          >
+            <Select
+              id="GradeId"
+              autoComplete="on"
+              name="GradeId"
+              
+              value={values.GradeId}
+              onChange={(e) => {
+                handleChange(e);
+              }}
+              inputProps={{
+                name: "GradeId",
+                id: "GradeId",
+              }}
+            >
+              {grades.map((grade) => (
+                <MenuItem
+                  key={grade.id}
+                  value={grade.id}
+                >{`${grade.Grado}`}</MenuItem>
+              ))}
+            </Select>
+            <FormHelperText>
+              {touched.GradeId && errors.GradeId}
+            </FormHelperText>
+          </FormControl>
+        </Box>
+              </Grid>
               <Grid item xs={3}>
                 <Box display="flex" style={{ flexDirection: "column" }}>
                   <Box>

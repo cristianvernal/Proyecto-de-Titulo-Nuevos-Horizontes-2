@@ -20,5 +20,7 @@ export interface Student {
     GradeData?: Grade;
     CollegeId: string,
     CollegeData?: College;
+    StudentId: string,
+    StudentGrade?: Student;
     FechaCreacion: Timestamp,
 }

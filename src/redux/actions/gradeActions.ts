@@ -9,8 +9,9 @@ import { SnackState } from "../../models/snack-state";
 import { cleanString } from "../../utils/utils";
 import { openSnack } from "./uiActions";
 import { Grade } from "../../models/Grade";
-import { Student } from "../../models/Student";
-import { getStudents } from "./studentActions";
+import { Student } from '../../models/Student';
+import { groupBy } from 'lodash';
+
 
 const API_KEY = firebaseConfig.apiKey;
 const { format, addDays } = require("date-fns");
@@ -34,6 +35,11 @@ export const getGrades = (
         .collection("Estudiantes")
         .get();
 
+        const studentList = responseStundent.docs.map((x) => ({
+          ...x.data(),
+          id: x.id,
+        }))
+
       // Without limit
       const responseTotal = await firestore.collection("Cursos").get();
 
@@ -43,11 +49,15 @@ export const getGrades = (
         id: x.id,
       }));
       
+     
+
       const gradelist = response.docs.map((x) => ({
         ...x.data(),
         TeacherData: employeeList.find((y) => y.id === x.data().TeacherId),
+        StudentData: studentList.find((z) => z.id === x.data().StudentId), 
         id: x.id,
       }));
+
       dispatch({
         type: types.GRADES_GET_SUCCESS,
         payload: {
@@ -88,7 +98,7 @@ export const getMoreGrades = (
 
       dispatch({
         type: types.GRADES_GET_SUCCESS,
-        students: grades.concat(gradesList as Grade[]),
+        grades: grades.concat(gradesList as Grade[]),
         totalDocs: totalDocs,
         lastDoc: response.docs[response.docs.length - 1],
       });

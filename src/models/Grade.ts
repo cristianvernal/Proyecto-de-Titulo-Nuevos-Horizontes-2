@@ -9,7 +9,8 @@ export interface Grade {
     Paralelo: string,
     TeacherId: string,
     TeacherData?: Employee,
-    FechaCreacion: Timestamp,
     StudentId: string,
+    StudentData?: Student;
     Horario?: boolean
+    FechaCreacion: Timestamp,
 }

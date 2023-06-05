@@ -23,7 +23,8 @@ import logo from "../vendor/logotipo.png";
 import "../vendor/perfect-scrollbar.css";
 import logoDemanda from "../vendor/LogoDemanda.svg";
 import icon from "../vendor/icon.png"
-import logoColegio from "../vendor/logoColegio.jpg"
+import logoColegio from "../vendor/logoColegio.jpg";
+import Colegio4 from "../vendor/Colegio4.png";
 import { color } from "@material-ui/system";
 
 const Drawer = styled(MuiDrawer)`
@@ -35,24 +36,25 @@ const Drawer = styled(MuiDrawer)`
 `;
 
 const Scrollbar = styled(PerfectScrollbar)`
-  background-color: ${(props) => props.theme.sidebar.background};
+background: ${("#d0f4de")};
   border-right: 1px solid rgba(0, 0, 0, 0.12);
 `;
 
 const List = styled(MuiList)`
-  background-color: ${(props) => props.theme.sidebar.background};
+background: ${("#d0f4de")};
 `;
 
 const Items = styled.div`
   padding-top: ${(props) => props.theme.spacing(2.5)}px;
   padding-bottom: ${(props) => props.theme.spacing(2.5)}px;
+  
 `;
 
 const Brand = styled(ListItem)`
   font-size: ${(props) => props.theme.typography.h5.fontSize};
   font-weight: ${(props) => props.theme.typography.fontWeightMedium};
   color: ${(props) => props.theme.sidebar.header.color};
-  background-color: ${(props) => "white"};
+  background: ${("#d0f4de")};
   font-family: ${(props) => props.theme.typography.fontFamily};
   min-height: 56px;
   padding-left: ${(props) => props.theme.spacing(6)}px;
@@ -95,6 +97,7 @@ const Category = styled(ListItem)`
   padding-left: ${(props) => props.theme.spacing(8)}px;
   padding-right: ${(props) => props.theme.spacing(7)}px;
   font-weight: ${(props) => props.theme.typography.fontWeightRegular};
+  
 
   svg {
     color: ${(props) => props.theme.sidebar.color};
@@ -102,6 +105,7 @@ const Category = styled(ListItem)`
     width: 20px;
     height: 20px;
     opacity: 0.5;
+    
   }
 
   &:hover {
@@ -201,11 +205,11 @@ const SidebarSection = styled(Typography)`
     ${(props) => props.theme.spacing(1)}px;
   opacity: 0.9;
   display: block;
+  
 `;
 
 const SidebarFooter = styled.div`
-  background-color: ${(props) =>
-    props.theme.sidebar.footer.background} !important;
+background: ${("#d0f4de")};
   padding: ${(props) => props.theme.spacing(2.75)}px
     ${(props) => props.theme.spacing(4)}px;
   border-right: 1px solid rgba(0, 0, 0, 0.12);
@@ -347,7 +351,8 @@ const Sidebar = ({ classes, staticContext, location, ...rest }) => {
     <Drawer variant="permanent" {...rest}>
       <Brand component={NavLink} to="/establecimientos" button>
        <div style={{
-        backgroundImage:`url('${logoColegio}')`,width:192, height:64
+         
+        backgroundImage:`url('${Colegio4}')`,width:192, height:59,
         
         }}
        ></div> 

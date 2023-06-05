@@ -6,6 +6,7 @@ export interface Attendance {
     id: string,
     Presente: boolean,
     Observación: string,
+    StudentId: string,
     StudentData?: Student,
     FechaCreacion: Timestamp,
 }

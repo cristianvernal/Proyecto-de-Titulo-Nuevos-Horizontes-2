@@ -123,9 +123,9 @@ const ContentCard = () => {
               marginInlineEnd: 20,
               marginLeft: 10,
             }}
-            // onClick={() => {
-            //   handleOpenCreateModal();
-            // }}
+            onClick={() => {
+              history.push("/usuarios/crear");
+            }}
           >
             Agregar Usuario
           </Button>

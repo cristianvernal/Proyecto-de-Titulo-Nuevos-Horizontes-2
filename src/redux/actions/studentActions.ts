@@ -8,9 +8,10 @@ import { NewGoogleUserResponse } from "../../models/new_google_user_response";
 import { SnackState } from "../../models/snack-state";
 import { cleanString } from "../../utils/utils";
 import { openSnack } from "./uiActions";
-import { Student } from "../../models/Student"; 
+import { Student } from '../../models/Student'; 
 import { Grade } from '../../models/Grade';
 import { StudentList } from '../../pages/Students/StudentList';
+import useEffect from 'react';
 
 const API_KEY = firebaseConfig.apiKey;
 const { format, addDays } = require("date-fns");
@@ -58,27 +59,28 @@ export const getStudents = (
       }))
 
 
-
       // Without limit
       const responseTotal = await firestore.collection("Estudiantes").get();
-      
-      
 
+    const studentFilter = await firestore.collection("Estudiantes").where("Nombres || Apellidos", "==", "GradeId").get();
+    const filtroEstudiante = studentFilter.docs.map((x) => ({
+      ...x.data(),
+      id: x.id,
+    }));
+      
       const studentlist = response.docs.map((x) => ({
         ...x.data(),
-        id: x.id,
-        // TutorData: tutorList.find((t: any) => t.id === x.data().TutorId),
         CollegeData: collegeList.find((i) => i.id === x.data().CollegeId), 
         GradeData: gradeList.find((y) => y.id === x.data().GradeId),
-        StudentData: x.data().GradeId === "Nombres" && gradeList.filter((subject: any) => subject.StudentId === x.id),
-        
+        StudentGrade: filtroEstudiante.find((z) => z.id === x.data().GradeId),
+        id: x.id,
       }));
       dispatch({
         type: types.STUDENTS_GET_SUCCESS,
         payload: {
           users: studentlist,
           totalDocs: responseTotal.size,
-          lastDoc: response.docs[response.docs.length - 1],
+          lastDoc: response.docs[response.docs.length - 1]
         },
       });
     } catch (error: any) {

@@ -8,58 +8,55 @@ import { NewGoogleUserResponse } from "../../models/new_google_user_response";
 import { SnackState } from "../../models/snack-state";
 import { cleanString } from "../../utils/utils";
 import { openSnack } from "./uiActions";
-import { Grade } from "../../models/Grade";
-import { Student } from "../../models/Student";
-import { getStudents } from "./studentActions";
-import { Attendance } from "../../models/Attendance"; 
+// import { Classroom } from "../../models/Classroom";
+import { ClassBook } from "../../models/ClassBook";
 
 const API_KEY = firebaseConfig.apiKey;
 const { format, addDays } = require("date-fns");
 
-export const getGrades = (
+export const getAttendance = (
   limit: number = types.TABLE_LIMIT_DEFAULT,
   order: string = "FechaCreacion"
 ): AppThunk => {
   return async (dispatch) => {
     dispatch({
-      type: types.GRADES_GET_SUBMITING,
+      type: types.CLASSBOOKS_GET_SUBMITING,
     });
     try {
       const response = await firestore
-        .collection("Asistencia")
+        .collection("Libro de Clases")
         .limit(limit)
         .orderBy(order, "desc")
         .get();
 
-        const responseStudent = await firestore  //llamar a todos los estudiantes
-        .collection("Estudiantes")
+      // Without limit
+      const responseTotal = await firestore
+        .collection("Libro de Clases")
         .get();
 
-      // Without limit
-      const responseTotal = await firestore.collection("Cursos").get();
-
-      const studentRef = await firestore.collection("Estudiantes").where("Nombres","==","GradeId").get();
-      const studentList = studentRef.docs.map((x) => ({
+      const classBookRef = await firestore.collection("Curso").get();
+      
+      const classBookList = classBookRef.docs.map((x) => ({
+        ...x.data(),
+        id: x.id,
+      }));
+      
+      const classBooksRef = await firestore.collection("ProfesorJefe").get();
+      const clasBookList = classBooksRef.docs.map((x) => ({
         ...x.data(),
         id: x.id,
       }));
 
-      /* const tutorlist = response.docs.map((x) => ({
+      const classBooklist = response.docs.map((x) => ({
         ...x.data(),
+        ClassBookData: classBookList.find((y) => y.id === x.data().ClassBookId),
+        // ClassBookData: classBookList.find((y) => y.id === x.data().GradeId),
         id: x.id,
-        StudentData: x.data().StudentsId && studentList.filter(student => x.data().StudentsId.some((i: any) => i.StudentsId === student.id)) 
-      })); */
-      
-      const studentlist = response.docs.map((x) => ({
-        ...x.data(),
-        /* StudentData: studentList.find((y) => y.id === x.data().StudentId), */
-        id: x.id,
-        StudentData: x.data().StudentsId && studentList.filter(student => x.data().StudentsId.some((i: any) => i.GradeId === student.id)) 
       }));
       dispatch({
-        type: types.STUDENTS_GET_SUCCESS,
+        type: types.CLASSBOOKS_GET_SUCCESS,
         payload: {
-          users: studentlist,
+          users: classBooklist,
           totalDocs: responseTotal.size,
           lastDoc: response.docs[response.docs.length - 1],
         },
@@ -67,167 +64,141 @@ export const getGrades = (
     } catch (error: any) {
       console.log(error);
       dispatch({
-        type: types.STUDENTS_GET_FAILURE,
+        type: types.CLASSBOOKS_GET_FAILURE,
         payload: error,
       });
     }
   };
 };
-
-
-
-
-
-
-
-
-export const getMoreGrades = (
+export const getMoreClassBooks = (
   limit: number = types.TABLE_LIMIT_DEFAULT
 ): AppThunk => {
   return async (dispatch, getState) => {
     dispatch({
-      type: types.STUDENTS_GET_SUBMITING,
+      type: types.CLASSBOOKS_GET_SUBMITING,
     });
-    const { grades, totalDocs, lastDoc } = getState().gradeReducer;
+    const { classBooks, totalDocs, lastDoc } = getState().classBookReducer;
     try {
       const response = await firestore
-        .collection("Cursos")
+        .collection("Libro de Clases")
         .orderBy("FechaCreacion", "desc")
         .startAfter(lastDoc)
         .limit(limit)
         .get();
 
-      const gradesList = response.docs.map((x) => ({
+      const classBookList = response.docs.map((x) => ({
         ...x.data(),
         id: x.id,
       }));
 
       dispatch({
-        type: types.GRADES_GET_SUCCESS,
-        students: grades.concat(gradesList as Grade[]),
+        type: types.CLASSBOOKS_GET_SUCCESS,
+        colleges: classBooks.concat(classBookList as ClassBook[]),
         totalDocs: totalDocs,
         lastDoc: response.docs[response.docs.length - 1],
       });
     } catch (error: any) {
       console.log(error);
       dispatch({
-        type: types.GRADES_GET_FAILURE,
+        type: types.CLASSBOOKS_GET_FAILURE,
         payload: error,
       });
     }
   };
 };
 
-export const getAllGrades = (): AppThunk => {
+export const addClassroom = (classBook: Partial<ClassBook>): AppThunk => {
   return async (dispatch) => {
     dispatch({
-      type: types.GRADES_GET_SUBMITING,
-    });
-    try {
-      const response = await firestore.collection("Cursos").get();
-
-      const gradelist = response.docs.map((x) => ({
-        ...x.data(),
-        id: x.id,
-      }));
-      dispatch({
-        type: types.GRADES_GET_SUCCESS,
-        payload: {
-          users: gradelist,
-          totalDocs: response.size,
-          lastDoc: response.docs[response.docs.length - 1],
-        },
-      });
-    } catch (error: any) {
-      console.log(error);
-      dispatch({
-        type: types.GRADES_GET_FAILURE,
-        payload: error,
-      });
-    }
-  };
-};
-
-export const addGrade = (grade: Grade): AppThunk => {
-  return async (dispatch) => {
-    dispatch({
-      type: types.GRADES_ADD_SUBMITING,
+      type: types.CLASSBOOKS_ADD_SUBMITING,
     });
     try {
       const data = {
-        ...grade,
+        ...classBook,
         FechaCreacion: firebase.firestore.FieldValue.serverTimestamp(),
       };
-      const response = await firestore.collection("Cursos").add(data);
+      await firestore.collection("Libro de Clases").add(data);
       dispatch({
-        type: types.GRADES_ADD_SUCCESS,
-        payload: response,
+        type: types.CLASSBOOKS_ADD_SUCCESS,
       });
-      dispatch(getGrades());
+      dispatch(getAttendance());
+ 
     } catch (error: any) {
       console.log(error);
       dispatch({
-        type: types.GRADES_ADD_FAILURE,
+        type: types.CLASSBOOKS_ADD_FAILURE,
         payload: error,
       });
+  
     }
   };
 };
 
-export const updateGrade = (grade: Partial<Grade>): AppThunk => {
-  return async (dispatch) => {
-    dispatch({
-      type: types.GRADES_EDIT_SUBMITING,
-    });
-    try {
-      const data = {
-        ...grade,
-      };
-      delete data.id;
-      await firestore.collection("Cursos").doc(grade.id).update(data);
-      dispatch({
-        type: types.GRADES_EDIT_SUCCESS,
-      });
-      dispatch(getGrades());
-    } catch (error: any) {
-      console.log(error);
-      dispatch({
-        type: types.GRADES_EDIT_FAILURE,
-        payload: error,
-      });
-    }
-  };
-};
+// export const editClassroom = (
+//   classroom: Partial<Classroom>,
+//   id: string
+// ): AppThunk => {
+//   return async (dispatch) => {
+//     dispatch({
+//       type: types.CLASSBOOKS_EDIT_SUBMITING,
+//     });
+//     try {
+//       await firestore.collection("Salas").doc(id).update(classroom);
+//       dispatch({
+//         type: types.CLASSROOMS_EDIT_SUCCESS,
+//       });
+//       dispatch(getClassBooks());
+//     } catch (error: any) {
+//       console.log(error);
+//       dispatch({
+//         type: types.CLASSROOMS_EDIT_FAILURE,
+//         payload: error,
+//       });
+//     }
+//   };
+// };
 
-export const deleteGrade = (id: string): AppThunk => {
-  return async (dispatch) => {
-    dispatch({
-      type: types.GRADES_DELETE_SUBMITING,
-    });
-    try {
-      await firestore.collection("Cursos").doc(id).delete();
-      dispatch({
-        type: types.GRADES_DELETE_SUCCESS,
-      });
-      dispatch(getGrades());
-    } catch (error: any) {
-      console.log(error);
-      dispatch({
-        type: types.GRADES_DELETE_FAILURE,
-        payload: error,
-      });
-    }
-  };
-};
+// export const deleteClassroom = (id: string): AppThunk => {
+//   return async (dispatch) => {
+//     dispatch({
+//       type: types.CLASSROOMS_DELETE_SUBMITING,
+//     });
+//     try {
+//       await firestore.collection("Salas").doc(id).delete();
+//       dispatch({
+//         type: types.CLASSROOMS_DELETE_SUCCESS,
+//       });
+//       dispatch(getClassrooms());
+//     } catch (error: any) {
+//       console.log(error);
+//       dispatch({
+//         type: types.CLASSROOMS_DELETE_FAILURE,
+//         payload: error,
+//       });
+//     }
+//   };
+// };
 
-export const setAddGradeInital = (): Action => ({
-  type: types.GRADES_ADD_INITIAL,
-});
+// export const setAddClassroomInitial = (): AppThunk => {
+//   return async (dispatch) => {
+//     dispatch({
+//       type: types.CLASSROOMS_ADD_INITIAL,
+//     });
+//   };
+// }
 
-export const setDeleteGradeInital = (): Action => ({
-  type: types.GRADES_DELETE_INITIAL,
-});
+// export const setEditClassroomInitial = (): AppThunk => {
+//   return async (dispatch) => {
+//     dispatch({
+//       type: types.CLASSROOMS_EDIT_INITIAL,
+//     });
+//   };
+// }
 
-export const setEditGradeInital = (): Action => ({
-  type: types.GRADES_EDIT_INITIAL,
-});
+// export const setDeleteClassroomInitial = (): AppThunk => {
+//   return async (dispatch) => {
+//     dispatch({
+//       type: types.CLASSROOMS_DELETE_INITIAL,
+//     });
+//   };
+// }

@@ -17,9 +17,11 @@ import {
   Apartment,
   Assignment,
   AssignmentInd,
+  Book,
   Class,
   DesktopWindows,
   Group,
+  LocalLibrary,
   MenuBook,
   Room,
   Schedule,
@@ -48,11 +50,13 @@ import { TutorList } from "../pages/Tutors/TutorList";
 import { UserList } from "../pages/UserList";
 import { ViewUser } from "../pages/ViewUser";
 import { AttendanceList } from "../pages/Attendance/AttendanceList";
+import {AsignGradeList} from "../pages/Grades2/AsignGradeList";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "../pages/auth/SignUp";
 import { GradesScheduleList } from "../pages/Schedule/GradesScheduleList";
 import { EditScheduleList } from "../pages/Schedule/Edit/EditSchedule";
 import { StudentAdminForm, createStudentAdminForm } from "../pages/StudentAdmin/StudentAdminList";
+import { NewUser } from "../pages/Users/NewUser";
 
 
 
@@ -100,9 +104,18 @@ const CollegeRoutes = {
 const AttendanceRoutes = {
   id: "Asistencia",
   path: "/asistencia",
-  icon: <Apartment />,
+  
   guard: AuthGuard,
   component: AttendanceList,
+  children: null,
+};
+
+const AsignGradeRoutes = {
+  id: "notas",
+  path: "/notas",
+  
+  guard: AuthGuard,
+  component: AsignGradeList,
   children: null,
 };
 
@@ -179,7 +192,7 @@ const CurriculumRoutes = {
 const ClassBookRoutes = {
   id: "Libro de Clases",
   path: "/LibroDeClases",
-  icon: <MenuBook />,
+  icon: <LocalLibrary />,
   guard: AuthGuard,
   component: ClassBookList,
   children: null,
@@ -317,6 +330,12 @@ const UsersSubRoutes = {
       guard: AuthGuard,
       component: ViewUser,
     },
+    {
+      path: "/usuarios/crear",
+      name:"crear",
+      guard: AuthGuard,
+      component: NewUser,
+    }
   ],
 };
 
@@ -388,11 +407,13 @@ export const protectedRoutes = [
   StudentsSubRoutes,
   TutorsSubRoutes,
   EmployeesSubRoutes,
+  UsersSubRoutes,
   ScheduleRoutes,
   ScheduleSubRoutes,
   GradesSubRoutes,
   UsersRoutes,
   AttendanceRoutes,
+  AsignGradeRoutes,
   
 ];
 

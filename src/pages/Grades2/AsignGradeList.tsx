@@ -26,6 +26,10 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  FormControl,
+  Select,
+  FormHelperText,
+  MenuItem,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { green, red } from "@material-ui/core/colors";
@@ -82,16 +86,14 @@ import {
   StudentState,
   studentReducer,
 } from "../../redux/reducers/studentReducer";
-import { Student } from '../../models/Student';
+import { Student } from "../../models/Student";
 import { Attendance } from "../../models/Attendance";
 import { margin } from "polished";
 import { getGrades, getMoreGrades } from "../../redux/actions/gradeActions";
 import { GradeState } from "../../redux/reducers/gradeReducer";
 import { Grade } from "../../models/Grade";
-import { useParams } from 'react-router-dom';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-
+import { useParams } from "react-router-dom";
+import { Asignaturas } from "/Users/Crist/OneDrive/Escritorio/Proyecto de Titulo Nuevos Horizontes/src/constants/Asignaturas.json";
 
 const Card = styled(MuiCard)(spacing);
 
@@ -100,7 +102,6 @@ const Divider = styled(MuiDivider)(spacing);
 const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
 const orderByUsers = ["Nombre", "Fecha", "Tipo usuario"];
-
 
 interface filterProps {
   changeOrder: (value: any) => void;
@@ -121,7 +122,6 @@ const ContentCard = () => {
   const [subjects, setSubjects] = useState([]);
   const [selectedAsistencia, setSelectedAsistencia] = useState("");
   const [resultados, setResultados] = useState<any[]>([]);
- 
 
   const handleOpenChargeModal = (data: any) => {
     setSubjects(data);
@@ -180,10 +180,6 @@ const ContentCard = () => {
     },
   });
 
-
-
-
-
   // useEffect(() => {
   //   const obtenerDatos = async () => {
   //     try {
@@ -227,7 +223,6 @@ const ContentCard = () => {
   //   };
   //   obtenerDatos();
   // }, []);
-
 
   // const firebaseConfig = {
   //   // ...
@@ -277,7 +272,6 @@ const ContentCard = () => {
   useEffect(() => {
     dispatch(getStudents());
     dispatch(getMoreStudents());
-    
   }, []);
 
   const {
@@ -295,6 +289,26 @@ const ContentCard = () => {
   /* console.log(employees); */
   return (
     <>
+      {/* <CardHeader
+            action={
+              <>
+                <Button
+                  startIcon={<AddIcon />}
+                  style={{
+                    backgroundColor: "#007ac9",
+                    color: "#fff",
+                    marginInlineEnd: 20,
+                    marginLeft: 10,
+                  }}
+                  onClick={() => {
+                    history.push("/trabajadores/Crear");
+                  }}
+                >
+                  Agregar trabajador
+                </Button>
+              </>
+            }
+          /> */}
       <Card mb={6}>
         <FilterSection
           changeOrder={(order) => {
@@ -308,8 +322,12 @@ const ContentCard = () => {
               <TableHead>
                 <TableRow>
                   <TableCell align="left">Estudiante</TableCell>
-                  <TableCell align="center">Asistencia</TableCell>
-                  <TableCell align="center">Justificacion</TableCell>
+                  <TableCell align="center">Asignatura</TableCell>
+                  <TableCell align="center">Nota 1</TableCell>
+                  <TableCell align="center">Nota 2</TableCell>
+                  <TableCell align="center">Nota 3</TableCell>
+                  <TableCell align="center">Nota 4</TableCell>
+                  <TableCell align="center">Promedio</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -323,43 +341,131 @@ const ContentCard = () => {
                     .map((data: Student) => (
                       <Fade key={data.id} in={true}>
                         <TableRow hover className={classes.styledRow}>
-                          <TableCell align="left">{`${data?.Nombres}  ${data?.Apellidos}`}</TableCell>
-                          <TableCell align="center">
-                            <input
-                              type="radio"
-                              value="Presente"
-                              name="Asistencia"
-                              checked={selectedAsistencia === "Presente"}
-                              onChange={() => setSelectedAsistencia("Presente")}
-                            />{" "}
-                            Presente
-                            <input
-                              type="radio"
-                              value="Ausente"
-                              name="Asistencia"
-                              checked={selectedAsistencia === "Ausente"}
-                              onChange={() => setSelectedAsistencia("Ausente")}
-                            />{" "}
-                            Ausente
-                          </TableCell>
-                          {/* <TableCell align="center">{data?.Telefono}</TableCell> */}
-                          <TableCell align="center">
-                          <TextField
-                                type="text"
+                          <TableCell
+                            align="left"
+                            style={{ width: 250 }}
+                          >{`${data?.Nombres}  ${data?.Apellidos}`}</TableCell>
+                          <TableCell align="right">
+                            <FormControl fullWidth={true} size="small">
+                              <Select
+                                id="Asignaturas"
+                                autoComplete="on"
                                 autoFocus
-                                label="Justificacion"
-                                id="Justificacion"
-                                size="small"
-                                style={{
-                                  width: 200,
-                              
-                                }}
+                                name="Asignaturas"                                
+                                style={{ width: 170 }}
                                 variant="outlined"
-                                // value={values.Horas}
-                                // onChange={handleChange}
-                                // error={touched.Horas && Boolean(errors.Horas)}
-                                // helperText={touched.Horas && errors.Horas}
-                              />
+                                onChange={(e) => {
+                                  handleChangeOrder(e);
+                                }}
+                                inputProps={{
+                                  name: "Asignaturas",
+                                }}
+                              >
+                                {Asignaturas.map((asignatura) => (
+                                  <MenuItem
+                                    key={asignatura}
+                                    value={asignatura}
+                                  >{`${asignatura}`}</MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                          </TableCell>
+                          <TableCell align="center">
+                            <TextField
+                              type="number"
+                              autoFocus
+                              label="Nota 1"
+                              id="Nota 1"
+                              size="small"
+                              style={{
+                                width: 80,
+                              }}
+                              variant="outlined"
+                              // value={values.Horas}
+                              // onChange={handleChange}
+                              // error={touched.Horas && Boolean(errors.Horas)}
+                              // helperText={touched.Horas && errors.Horas}
+                            />
+                          </TableCell>
+                          <TableCell align="center">
+                            <TextField
+                              type="number"
+                              autoFocus
+                              label="Nota 2"
+                              id="Nota 2"
+                              size="small"
+                              style={{
+                                width: 80,
+                              }}
+                              variant="outlined"
+                              // value={values.Horas}
+                              // onChange={handleChange}
+                              // error={touched.Horas && Boolean(errors.Horas)}
+                              // helperText={touched.Horas && errors.Horas}
+                            />
+                          </TableCell>
+                          <TableCell align="center">
+                            <TextField
+                              type="number"
+                              autoFocus
+                              label="Nota 3"
+                              id="Nota 3"
+                              size="small"
+                              style={{
+                                width: 80,
+                              }}
+                              variant="outlined"
+                              // value={values.Horas}
+                              // onChange={handleChange}
+                              // error={touched.Horas && Boolean(errors.Horas)}
+                              // helperText={touched.Horas && errors.Horas}
+                            />
+                          </TableCell>
+                          <TableCell align="center">
+                            <TextField
+                              type="number"
+                              autoFocus
+                              label="Nota 4"
+                              id="Nota 4"
+                              size="small"
+                              style={{
+                                width: 80,
+                              }}
+                              variant="outlined"
+                              // value={values.Horas}
+                              // onChange={handleChange}
+                              // error={touched.Horas && Boolean(errors.Horas)}
+                              // helperText={touched.Horas && errors.Horas}
+                            />
+                          </TableCell>
+                          <TableCell align="center">
+                            <TextField
+                              type="text"
+                              autoFocus
+                              id="Promedio"
+                              size="small"
+                              style={{
+                                width: 80,
+                              }}
+                              variant="outlined"
+                              // value={values.Horas}
+                              // onChange={handleChange}
+                              // error={touched.Horas && Boolean(errors.Horas)}
+                              // helperText={touched.Horas && errors.Horas}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <Button
+                              type="submit"
+                              variant="contained"
+                              style={{
+                                backgroundColor: "#007ac9",
+                                color: "#fff",
+                                marginLeft: 6,
+                              }}
+                            >
+                              Guardar
+                            </Button>
                           </TableCell>
                         </TableRow>
                       </Fade>
@@ -383,26 +489,6 @@ const ContentCard = () => {
         onClose={handleCloseChargeModal}
         subjects={subjects}
       />
-        <CardHeader
-          action={
-            <>
-              <Button
-                
-                style={{
-                  backgroundColor: "#007ac9",
-                  color: "#fff",
-                  marginInlineEnd: 20,
-                  marginLeft: 10,
-                }}
-                // onClick={() => {
-                //   history.push("/trabajadores/Crear");
-                // }}
-              >
-                Guardar Asistencia
-              </Button>
-            </>
-          }
-        />
       <Dialog open={openDeleteModal} onClose={handleCloseDeleteModal}>
         {" "}
         {/* son cuadros de dialogos */}
@@ -445,7 +531,6 @@ const ContentCard = () => {
     </>
   );
 };
-
 
 const FilterSection: React.FC<filterProps> = ({ changeOrder }) => {
   const dispatch = useDispatch();
@@ -631,19 +716,19 @@ const FilterSection: React.FC<filterProps> = ({ changeOrder }) => {
     </CardContent>
   );
 };
-export const AttendanceList = () => {
+export const AsignGradeList = () => {
   return (
     <React.Fragment>
       <Helmet title="Trabajadores" />
       <Typography variant="h3" gutterBottom display="inline">
-        Asistencia
+        Notas
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
         <Link component={NavLink} exact to="/LibroDeClases">
           Libro de Clases
         </Link>
-        <Typography>Asistencia</Typography>
+        <Typography>Notas</Typography>
       </Breadcrumbs>
 
       <Divider my={6} />
