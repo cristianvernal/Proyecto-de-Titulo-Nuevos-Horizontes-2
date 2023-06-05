@@ -43,6 +43,7 @@ import { EmployeeState } from "../../../redux/reducers/employeeReducer";
 import { AddEmployee, EditEmployee, setAddEmployeeInital, setEditEmployeeInital} from "../../../redux/actions/employeeActions";
 import { getColleges } from "../../../redux/actions/collegeActions";
 import { CollegeState } from "../../../redux/reducers/collegeReducer";
+import * as rutUtils from "rut.js";
 
 const Card = styled(MuiCard)(spacing);
 
@@ -105,7 +106,18 @@ const EmployeeForm = () => {
         Nombre: yup.string().required("Este campo es obligatorio"),
         ApPaterno: yup.string().required("Este campo es obligatorio"),
         ApMaterno: yup.string().required("Este campo es obligatorio"),
-        Rut: yup.string().required("Este campo es obligatorio"),
+        Rut: yup
+        .string()
+        .min(11)
+        .required("Rut es requerido")
+        .test({
+          name: "Rut",
+          message: "Rut no válido",
+          test: (value) => {
+            if (!value) return false;
+            return rutUtils.validate(value);
+          },
+        }),
         Telefono: yup.number().min(6).required("Este campo es obligatorio"),
         Edad: yup.number().max(90).required("Este campo es obligatorio"),
         Direccion: yup.string().required("Este campo es obligatorio"),
@@ -174,7 +186,10 @@ const EmployeeForm = () => {
                 <TextField
                   id="Rut"
                   label="Rut"
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    e.target.value = rutUtils.format(e.target.value);
+                    handleChange(e);
+                  }}
                   value={values.Rut}
                   helperText={touched.Rut && errors.Rut}
                   error={touched.Rut && Boolean(errors.Rut)}

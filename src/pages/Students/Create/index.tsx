@@ -47,6 +47,7 @@ import { getGrades } from "../../../redux/actions/gradeActions";
 import { GradeState } from "../../../redux/reducers/gradeReducer";
 import { getTutors } from "../../../redux/actions/tutorActions";
 import { TutorState } from "../../../redux/reducers/tutorReducer";
+import * as rutUtils from "rut.js";
 
 
 
@@ -122,7 +123,18 @@ const StudentForm = () => {
         Nombres: yup.string().required("Este campo es obligatorio"),
         Apellidos: yup.string().required("Este campo es obligatorio"),        
         Tutor: yup.string().required("Este campo es obligatorio"),
-        Rut: yup.string().required("Este campo es obligatorio"),
+        Rut: yup
+        .string()
+        .min(11)
+        .required("Rut es requerido")
+        .test({
+          name: "Rut",
+          message: "Rut no válido",
+          test: (value) => {
+            if (!value) return false;
+            return rutUtils.validate(value);
+          },
+        }),
         FechaNacimiento: yup.string().required("Este campo es obligatorio"),
         Edad: yup.number().required("Este campo es obligatorio"),
         Direccion: yup.string().required("Este campo es obligatorio"),
@@ -172,7 +184,10 @@ const StudentForm = () => {
                 <TextField
                   id="Rut"
                   label="Rut"
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    e.target.value = rutUtils.format(e.target.value);
+                    handleChange(e);
+                  }}
                   value={values.Rut}
                   helperText={touched.Rut && errors.Rut}
                   error={touched.Rut && Boolean(errors.Rut)}
