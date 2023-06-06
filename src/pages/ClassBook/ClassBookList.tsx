@@ -74,6 +74,7 @@ import { ModalAcademicCharge } from "../../components/ModalAcademicCharge";
 import {
   getMoreSubjects,
   getSubjtectByTeacherId,
+  setSelectedSubject,
 } from "../../redux/actions/subjectActions";
 import { SubjectState } from "../../redux/reducers/subjectReducer";
 import { getColleges } from "../../redux/actions/collegeActions";
@@ -91,6 +92,7 @@ import { getSubjects } from "../../redux/actions/subjectActions";
 import { Grade } from "../../models/Grade";
 import { getGrades, getMoreGrades } from "../../redux/actions/gradeActions";
 import { GradeState } from "../../redux/reducers/gradeReducer";
+import { setSelectedStudent } from "../../redux/actions/studentActions";
 
 const Card = styled(MuiCard)(spacing);
 
@@ -150,9 +152,9 @@ const ContentCard = () => {
 
   //Funcion para ir a editar
 
-  const handleGoToEdit = (data: any) => {
-    dispatch(setSelectedEmployee(data));
-    history.push(`/trabajadores/${data.id}/editar`);
+  const handleGoToAttendace = (data: any) => {
+    dispatch(setSelectedStudent(data));
+    history.push(`/asistencia/${data.id}`);
   };
 
   const handleChangeOrder = (order: any) => {
@@ -242,6 +244,9 @@ const ContentCard = () => {
                                 <IconButton
                                   color="primary"
                                   size="small"
+                                  // onClick={() =>{
+                                  //   handleGoToAttendace(data);
+                                  // }}
                                   onClick={() => {
                                     history.push("/asistencia");
                                     /* aqui */
@@ -268,10 +273,10 @@ const ContentCard = () => {
                                 <IconButton
                                   color="primary"
                                   size="small"
-                                  // onClick={() => {
-                                  //   handleGoToEdit(data);
-                                  //   /* aqui */
-                                  // }}
+                                  onClick={() => {
+                                    history.push("/observaciones");
+                                    /* aqui */
+                                  }}
                                 >
                                   <EmojiObjects />
                                 </IconButton>

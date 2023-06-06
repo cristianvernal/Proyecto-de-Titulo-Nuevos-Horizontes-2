@@ -57,6 +57,7 @@ import { GradesScheduleList } from "../pages/Schedule/GradesScheduleList";
 import { EditScheduleList } from "../pages/Schedule/Edit/EditSchedule";
 import { StudentAdminForm, createStudentAdminForm } from "../pages/StudentAdmin/StudentAdminList";
 import { NewUser } from "../pages/Users/NewUser";
+import {ObservationsList} from "../pages/Observations/ObserbationsList";
 
 
 
@@ -104,7 +105,6 @@ const CollegeRoutes = {
 const AttendanceRoutes = {
   id: "Asistencia",
   path: "/asistencia",
-  
   guard: AuthGuard,
   component: AttendanceList,
   children: null,
@@ -113,9 +113,16 @@ const AttendanceRoutes = {
 const AsignGradeRoutes = {
   id: "notas",
   path: "/notas",
-  
   guard: AuthGuard,
   component: AsignGradeList,
+  children: null,
+};
+
+const ObservationsRoutes = {
+  id: "observaciones",
+  path: "/observaciones",
+  guard: AuthGuard,
+  component: ObservationsList,
   children: null,
 };
 
@@ -414,7 +421,7 @@ export const protectedRoutes = [
   UsersRoutes,
   AttendanceRoutes,
   AsignGradeRoutes,
-  
+  ObservationsRoutes,
 ];
 
 // Routes visible in the sidebar

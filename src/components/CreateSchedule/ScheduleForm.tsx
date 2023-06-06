@@ -72,6 +72,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({
             <Select
               labelId="subject-select-label"
               id="subject-select"
+              variant="filled"
               value={selectedGrade ? selectGrade : grade}
               onChange={(event) => selectGrade(event.target.value as any)}
               required
@@ -91,6 +92,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({
               labelId="subject-select-label"
               id="subject-select"
               fullWidth
+              variant="filled"
               value={asignatura}
               onChange={(event) => setAsignatura(event.target.value as any)}
               required
@@ -112,6 +114,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({
               labelId="dayOfWeek-select-label"
               id="dayOfWeek-select"
               value={dia}
+              variant="filled"
               onChange={(event) => setDia(event.target.value as any)}
               required
             >
@@ -157,7 +160,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({
             variant="contained"
             color="primary"
             type="submit"
-            style={{ marginRight: 15 }}
+            style={{ marginRight: 15, marginLeft:15 }}
           >
             Agregar Asignatura
           </Button>
