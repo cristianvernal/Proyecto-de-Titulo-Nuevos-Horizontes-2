@@ -94,6 +94,7 @@ import { GradeState } from "../../redux/reducers/gradeReducer";
 import { Grade } from "../../models/Grade";
 import { useParams } from "react-router-dom";
 import { Asignaturas } from "/Users/Crist/OneDrive/Escritorio/Proyecto de Titulo Nuevos Horizontes/src/constants/Asignaturas.json";
+import { AsignGrade } from "../../models/AsignGrade";
 
 const Card = styled(MuiCard)(spacing);
 

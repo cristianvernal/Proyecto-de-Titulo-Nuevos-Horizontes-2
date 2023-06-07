@@ -364,3 +364,23 @@ export const ATTENDANCES_ADD_INITIAL   = "[Attendance] add initial";
 export const ATTENDANCES_ADD_SUBMITING = "[Attendance] add submiting";
 export const ATTENDANCES_ADD_SUCCESS   = "[Attendance] add success";
 export const ATTENDANCES_ADD_FAILURE   = "[Attendance] add failures";
+
+//ATTENDANCE
+
+export const ASIGNGRADES_GET_SUBMITING = "[AsignGrades] get submiting";
+export const ASIGNGRADES_GET_FAILURE   = "[AsignGrades] get failure";
+export const ASIGNGRADES_GET_SUCCESS   = "[AsignGrades] get success";
+export const ASIGNGRADES_ADD_INITIAL   = "[AsignGrades] add initial";
+export const ASIGNGRADES_ADD_SUBMITING = "[AsignGrades] add submiting";
+export const ASIGNGRADES_ADD_SUCCESS   = "[AsignGrades] add success";
+export const ASIGNGRADES_ADD_FAILURE   = "[AsignGrades] add failures";
+
+//OBSERVATIONS
+
+export const OBSERVATIONS_GET_SUBMITING = "[Observations] get submiting";
+export const OBSERVATIONS_GET_FAILURE   = "[Observations] get failure";
+export const OBSERVATIONS_GET_SUCCESS   = "[Observations] get success";
+export const OBSERVATIONS_ADD_INITIAL   = "[Observations] add initial";
+export const OBSERVATIONS_ADD_SUBMITING = "[Observations] add submiting";
+export const OBSERVATIONS_ADD_SUCCESS   = "[Observations] add success";
+export const OBSERVATIONS_ADD_FAILURE   = "[Observations] add failures";

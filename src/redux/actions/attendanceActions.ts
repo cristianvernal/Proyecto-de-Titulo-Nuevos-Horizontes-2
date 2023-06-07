@@ -10,6 +10,8 @@ import { cleanString } from "../../utils/utils";
 import { openSnack } from "./uiActions";
 // import { Classroom } from "../../models/Classroom";
 import { ClassBook } from "../../models/ClassBook";
+import { AttendanceList } from '../../pages/Attendance/AttendanceList';
+import { Attendance } from "../../models/Attendance";
 
 const API_KEY = firebaseConfig.apiKey;
 const { format, addDays } = require("date-fns");
@@ -70,30 +72,30 @@ export const getAttendance = (
     }
   };
 };
-export const getMoreClassBooks = (
+export const getMoreAttendance = (
   limit: number = types.TABLE_LIMIT_DEFAULT
 ): AppThunk => {
   return async (dispatch, getState) => {
     dispatch({
-      type: types.CLASSBOOKS_GET_SUBMITING,
+      type: types.ATTENDANCES_GET_SUBMITING,
     });
-    const { classBooks, totalDocs, lastDoc } = getState().classBookReducer;
+    const { attendance, totalDocs, lastDoc } = getState().attendanceReducer;
     try {
       const response = await firestore
-        .collection("Libro de Clases")
+        .collection("Asistencia")
         .orderBy("FechaCreacion", "desc")
         .startAfter(lastDoc)
         .limit(limit)
         .get();
 
-      const classBookList = response.docs.map((x) => ({
+      const AttendanceList = response.docs.map((x) => ({
         ...x.data(),
         id: x.id,
       }));
 
       dispatch({
-        type: types.CLASSBOOKS_GET_SUCCESS,
-        colleges: classBooks.concat(classBookList as ClassBook[]),
+        type: types.ATTENDANCES_GET_SUCCESS,
+        colleges: attendance.concat(AttendanceList as Attendance[]),
         totalDocs: totalDocs,
         lastDoc: response.docs[response.docs.length - 1],
       });
@@ -107,26 +109,26 @@ export const getMoreClassBooks = (
   };
 };
 
-export const addClassroom = (classBook: Partial<ClassBook>): AppThunk => {
+export const addAttendance = (attendance: Partial<Attendance>): AppThunk => {
   return async (dispatch) => {
     dispatch({
-      type: types.CLASSBOOKS_ADD_SUBMITING,
+      type: types.ATTENDANCES_ADD_SUBMITING,
     });
     try {
       const data = {
-        ...classBook,
+        ...attendance,
         FechaCreacion: firebase.firestore.FieldValue.serverTimestamp(),
       };
-      await firestore.collection("Libro de Clases").add(data);
+      await firestore.collection("Asistencia").add(data);
       dispatch({
-        type: types.CLASSBOOKS_ADD_SUCCESS,
+        type: types.ATTENDANCES_ADD_SUCCESS,
       });
       dispatch(getAttendance());
  
     } catch (error: any) {
       console.log(error);
       dispatch({
-        type: types.CLASSBOOKS_ADD_FAILURE,
+        type: types.ATTENDANCES_ADD_FAILURE,
         payload: error,
       });
   
@@ -179,18 +181,18 @@ export const addClassroom = (classBook: Partial<ClassBook>): AppThunk => {
 //   };
 // };
 
-// export const setAddClassroomInitial = (): AppThunk => {
-//   return async (dispatch) => {
-//     dispatch({
-//       type: types.CLASSROOMS_ADD_INITIAL,
-//     });
-//   };
-// }
+export const setAddAttendanceInitial = (): AppThunk => {
+  return async (dispatch) => {
+    dispatch({
+      type: types.ATTENDANCES_ADD_INITIAL,
+    });
+  };
+}
 
-// export const setEditClassroomInitial = (): AppThunk => {
+// export const setEditAttendanceInitial = (): AppThunk => {
 //   return async (dispatch) => {
 //     dispatch({
-//       type: types.CLASSROOMS_EDIT_INITIAL,
+//       type: types.ATTENDANCES_EDIT_INITIAL,
 //     });
 //   };
 // }
@@ -198,7 +200,7 @@ export const addClassroom = (classBook: Partial<ClassBook>): AppThunk => {
 // export const setDeleteClassroomInitial = (): AppThunk => {
 //   return async (dispatch) => {
 //     dispatch({
-//       type: types.CLASSROOMS_DELETE_INITIAL,
+//       type: types.ATTENDANCES_DELETE_INITIAL,
 //     });
 //   };
 // }
