@@ -94,7 +94,12 @@ import {
   import { Grade } from "../../models/Grade";
   import { useParams } from "react-router-dom";
   import { Asignaturas } from "/Users/Crist/OneDrive/Escritorio/Proyecto de Titulo Nuevos Horizontes/src/constants/Asignaturas.json";
-  
+import { useFormik } from "formik";
+import { Observation } from "../../models/Observations";
+import { AddObservation } from "../../redux/actions/observationsActions";
+import * as yup from "yup";  
+import { boolean } from "yup-locales/dist/locales/fr";
+
   const Card = styled(MuiCard)(spacing);
   
   const Divider = styled(MuiDivider)(spacing);
@@ -123,6 +128,7 @@ import {
     const [selectedAsistencia, setSelectedAsistencia] = useState("");
     const [resultados, setResultados] = useState<any[]>([]);
   
+    const [open, setOpen] = useState(false);
     const handleOpenChargeModal = (data: any) => {
       setSubjects(data);
       setOpenChargeModal(true);
@@ -180,94 +186,24 @@ import {
       },
     });
   
-    // useEffect(() => {
-    //   const obtenerDatos = async () => {
-    //     try {
-    //       //obtener los datos  del al collecion cursos
-    //       const cursosSnapshot = await db.collection("Cursos").get();
-    //       // Obtener los datos de la colección "estudiantes"
-    //       const estudiantesSnapshot = await db.collection("Estudiantes").get();
   
-    //       const resultadosTemp: any[] = [];
-  
-    //       cursosSnapshot.forEach((cursoDoc) => {
-    //         const cursoData = cursoDoc.data();
-  
-    //         const estudianteId = cursoData.Student;
-  
-    //         const estudianteDoc = estudiantesSnapshot.docs.find(
-    //           (estudianteDoc) => estudianteDoc.id === estudianteId
-    //         );
-  
-    //         if (estudianteDoc) {
-    //           const estudianteData = estudianteDoc.data();
-  
-    //           if (cursoData.Grado === estudianteData.Nombres) {
-    //             const resultado = {
-    //               cursoId: cursoDoc.id,
-    //               cursoGrado: cursoData.Grado,
-    //               estudianteId: estudianteDoc.id,
-    //               estudianteNombres: estudianteData.Nombres,
-    //               estudianteApellidos: estudianteData.Apellidos,
-    //             };
-  
-    //             resultadosTemp.push(resultado);
-    //           }
-    //         }
-    //       });
-  
-    //       setResultados(resultadosTemp);
-    //     } catch (error) {
-    //       console.log("Error al obtener datos", error);
-    //     }
-    //   };
-    //   obtenerDatos();
-    // }, []);
-  
-    // const firebaseConfig = {
-    //   // ...
-    // };
-  
-    // const db = firebase.firestore();
-  
-    //   useEffect(()=>{
-    //     db.collection("Cursos")
-    //     .get()
-    //     .then((snapshot1) =>{
-    //       db.collection("Estudiantes")
-    //       .get()
-    //       .then((snapshot2) => {
-    //         const resultadoTemp: any[] = [];
-  
-    //         snapshot1.forEach((doc1) =>{
-    //           const Grade = doc1.data();
-  
-    //           snapshot2.forEach((doc2) =>{
-    //             const Nombres = doc2.data();
-  
-    //             if(Grade.Grado === Nombres.Nombres){
-    //               const resultado = {
-    //                 dato1: Grade.Grado,
-    //                 dato2: Nombres.Nombres,
-    //               };
-  
-    //               resultadoTemp.push(resultado);
-    //             }
-  
-    //           });
-    //         });
-  
-    //         setResultados(resultadoTemp);
-  
-    //       })
-    //       .catch((error)=> {
-    //         console.log("Error al obtener datos de la coleccion 2: ", error);
-    //       })
-    //     })
-    //     .catch((error)=>{
-    //       console.log("Error al obtener datos de la coleccion 1: ", error)
-    //     })
-    //   }, []);
+const { handleSubmit, values, handleChange, touched, errors} =
+useFormik<Partial<Observation>>({
+  initialValues: {
+    Enfermedades: "",
+    Discapacidad: "",
+    Otros: "",
+    StudentId: "",
+  },
+  onSubmit: (values) => {
+    dispatch(AddObservation(values));
+  },
+  validationSchema: yup.object({
+    Enfermedades: yup.string().required("Este campo es obligatorio"),
+    Discapacidad: yup.string().required("Este campo es obligatorio"),
+    Otros: yup.string().required("Este campo es obligatorio"),
+  }),
+});
   
     useEffect(() => {
       dispatch(getStudents());
@@ -289,26 +225,7 @@ import {
     /* console.log(employees); */
     return (
       <>
-        {/* <CardHeader
-              action={
-                <>
-                  <Button
-                    startIcon={<AddIcon />}
-                    style={{
-                      backgroundColor: "#007ac9",
-                      color: "#fff",
-                      marginInlineEnd: 20,
-                      marginLeft: 10,
-                    }}
-                    onClick={() => {
-                      history.push("/trabajadores/Crear");
-                    }}
-                  >
-                    Agregar trabajador
-                  </Button>
-                </>
-              }
-            /> */}
+       
         <Card mb={6}>
           <FilterSection
             changeOrder={(order) => {
@@ -316,6 +233,7 @@ import {
               handleChangeOrder(order);
             }}
           />
+          <form onSubmit={handleSubmit}>
           <CardContent>
             <TableContainer className={classes.tableContainer}>
               <Table size="small" stickyHeader>
@@ -342,100 +260,8 @@ import {
                               align="left"
                               style={{ width: 250 }}
                             >{`${data?.Nombres}  ${data?.Apellidos}`}</TableCell>
-                            {/* <TableCell align="right">
-                              <FormControl fullWidth={true} size="small">
-                                <Select
-                                  id="Asignaturas"
-                                  autoComplete="on"
-                                  autoFocus
-                                  name="Asignaturas"                                
-                                  style={{ width: 170 }}
-                                  variant="outlined"
-                                  onChange={(e) => {
-                                    handleChangeOrder(e);
-                                  }}
-                                  inputProps={{
-                                    name: "Asignaturas",
-                                  }}
-                                >
-                                  {Asignaturas.map((asignatura) => (
-                                    <MenuItem
-                                      key={asignatura}
-                                      value={asignatura}
-                                    >{`${asignatura}`}</MenuItem>
-                                  ))}
-                                </Select>
-                              </FormControl>
-                            </TableCell> */}
-                            {/* <TableCell align="center">
-                              <TextField
-                                type="text"
-                                autoFocus
-                                label="Nota 1"
-                                id="Nota 1"
-                                size="small"
-                                style={{
-                                  width: 80,
-                                }}
-                                variant="outlined"
-                                // value={values.Horas}
-                                // onChange={handleChange}
-                                // error={touched.Horas && Boolean(errors.Horas)}
-                                // helperText={touched.Horas && errors.Horas}
-                              />
-                            </TableCell> */}
-                            {/* <TableCell align="center">
-                              <TextField
-                                type="text"
-                                autoFocus
-                                label="Nota 2"
-                                id="Nota 2"
-                                size="small"
-                                style={{
-                                  width: 80,
-                                }}
-                                variant="outlined"
-                                // value={values.Horas}
-                                // onChange={handleChange}
-                                // error={touched.Horas && Boolean(errors.Horas)}
-                                // helperText={touched.Horas && errors.Horas}
-                              />
-                            </TableCell> */}
-                            {/* <TableCell align="center">
-                              <TextField
-                                type="text"
-                                autoFocus
-                                label="Nota 3"
-                                id="Nota 3"
-                                size="small"
-                                style={{
-                                  width: 80,
-                                }}
-                                variant="outlined"
-                                // value={values.Horas}
-                                // onChange={handleChange}
-                                // error={touched.Horas && Boolean(errors.Horas)}
-                                // helperText={touched.Horas && errors.Horas}
-                              />
-                            </TableCell> */}
-                            {/* <TableCell align="center">
-                              <TextField
-                                type="text"
-                                autoFocus
-                                label="Nota 4"
-                                id="Nota 4"
-                                size="small"
-                                style={{
-                                  width: 80,
-                                }}
-                                variant="outlined"
-                                // value={values.Horas}
-                                // onChange={handleChange}
-                                // error={touched.Horas && Boolean(errors.Horas)}
-                                // helperText={touched.Horas && errors.Horas}
-                              />
-                            </TableCell> */}
                             <TableCell align="center">
+                              
                               <TextField
                                 type="text"
                                 autoFocus
@@ -445,10 +271,11 @@ import {
                                   width: 200,
                                 }}
                                 variant="outlined"
-                                // value={values.Horas}
-                                // onChange={handleChange}
-                                // error={touched.Horas && Boolean(errors.Horas)}
-                                // helperText={touched.Horas && errors.Horas}
+                                value={values.Enfermedades}
+                                onChange={handleChange}
+                                helperText={touched.Enfermedades && errors.Enfermedades}
+                                error={touched.Enfermedades && Boolean(errors.Enfermedades)}
+                                
                               />
                             </TableCell>
                             <TableCell align="center">
@@ -501,51 +328,16 @@ import {
                       ))}
                 </TableBody>
               </Table>
-            </TableContainer>
-            <TablePagination
-              component="div"
-              count={totalDocs}
-              onChangePage={handlePageChange}
-              onChangeRowsPerPage={handleLimitChange}
-              page={page}
-              rowsPerPage={limit}
-              rowsPerPageOptions={TABLE_LIMITS}
-            />
+            </TableContainer>            
           </CardContent>
+            </form>
         </Card>
         <ModalAcademicCharge
           open={openChargeModal}
           onClose={handleCloseChargeModal}
           subjects={subjects}
         />
-        <Dialog open={openDeleteModal} onClose={handleCloseDeleteModal}>
-          {" "}
-          {/* son cuadros de dialogos */}
-          <DialogTitle>{"Eliminar trabajador"}</DialogTitle>
-          <DialogContent>
-            {"¿Está seguro que desea eliminar el trabajador?"}
-          </DialogContent>
-          <Box display={"flex"} justifyContent={"end"}>
-            <DialogActions>
-              <Button
-                variant="contained"
-                color={"primary"}
-                onClick={() => handleDelete(selected)}
-              >
-                Aceptar
-              </Button>
-            </DialogActions>
-            <DialogActions>
-              <Button
-                variant="contained"
-                color={"default"}
-                onClick={() => handleCloseDeleteModal()}
-              >
-                Cancelar
-              </Button>
-            </DialogActions>
-          </Box>
-        </Dialog>
+        
         <Dialog open={openConfirm} onClose={handleCloseConfirm}>
           {" "}
           {/* son cuadros de dialogos */}
