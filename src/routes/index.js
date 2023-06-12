@@ -26,6 +26,7 @@ import {
   Room,
   Schedule,
   SupervisorAccount,
+  MonetizationOn,
 } from "@material-ui/icons";
 import { CategoryList } from "../pages/CategoryList";
 import { ClassroomList } from "../pages/Classroom/ClassroomList";
@@ -58,6 +59,7 @@ import { EditScheduleList } from "../pages/Schedule/Edit/EditSchedule";
 import { StudentAdminForm, createStudentAdminForm } from "../pages/StudentAdmin/StudentAdminList";
 import { NewUser } from "../pages/Users/NewUser";
 import {ObservationsList} from "../pages/Observations/ObserbationsList";
+import {TuitionList} from "../pages/Tuition/TuitionList";
 
 
 
@@ -115,6 +117,15 @@ const AsignGradeRoutes = {
   path: "/notas",
   guard: AuthGuard,
   component: AsignGradeList,
+  children: null,
+};
+
+const MatriculaRoutes = {
+  id: "Matriculas",
+  path: "/matriculas", 
+  icon: <MonetizationOn />,
+  guard: AuthGuard,
+  component: TuitionList,
   children: null,
 };
 
@@ -422,6 +433,7 @@ export const protectedRoutes = [
   AttendanceRoutes,
   AsignGradeRoutes,
   ObservationsRoutes,
+  MatriculaRoutes,
 ];
 
 // Routes visible in the sidebar
@@ -434,4 +446,5 @@ export const sidebarRoutes = [
   SubjectRoutes,
   ClassBookRoutes,
   ScheduleRoutes, // horarios
+  MatriculaRoutes,
 ];

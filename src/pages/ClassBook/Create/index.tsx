@@ -86,7 +86,7 @@ const TutorForm = () => {
         ApPaterno: "",
         ApMaterno: "",
         Rut: "",
-        Telefono: 0,
+        // Telefono: 0,
         Edad: 0,
         Direccion: "",
         CollegeId: "",

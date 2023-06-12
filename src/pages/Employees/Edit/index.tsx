@@ -94,7 +94,7 @@ const EmployeeForm = () => {
         ApPaterno: "",
         ApMaterno: "",
         Rut: "",
-        Telefono: 0,
+        Telefono: "",
         Edad: 0,
         Direccion: "",
         CollegeId: "",
@@ -199,6 +199,7 @@ const EmployeeForm = () => {
               <Grid item xs={3}>
                 <TextField
                   id="Telefono"
+                  
                   label="Teléfono"
                   onChange={handleChange}
                   value={values.Telefono}
@@ -223,7 +224,7 @@ const EmployeeForm = () => {
                   id="Direccion"
                   label="Dirección"
                   onChange={handleChange}
-                  value={values.Edad}
+                  value={values.Direccion}
                   helperText={touched.Direccion && errors.Direccion}
                   error={touched.Direccion && Boolean(errors.Direccion)}
                 />

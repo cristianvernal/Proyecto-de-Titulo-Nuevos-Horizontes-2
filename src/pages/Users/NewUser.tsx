@@ -9,6 +9,10 @@ import {
   Link,
   TextField,
   Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { spacing } from "@material-ui/system";
@@ -23,6 +27,7 @@ import * as yup from "yup";
 import { createUser } from "../../redux/actions/usersActions";
 import { RootState } from "../../redux/reducers/rootReducer";
 import { timesStampFormattedsimple } from "../../utils/utils";
+import { IUsersState } from "../../redux/reducers/usersReducer";
 
 const Card = styled(MuiCard)(spacing);
 
@@ -39,9 +44,20 @@ const ContentCard = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const { add } = useSelector<RootState, IUsersState>(
+    (state) => state.usersReducer
+  );
   const [valPermiso, setValPermiso] = useState<string | null>(null);
   const [valCargo, setValCargo] = useState<string | null>(null);
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+
+ 
 
   const { handleSubmit, values, handleChange, touched, errors } = useFormik({
     initialValues: {
@@ -99,6 +115,7 @@ const ContentCard = () => {
   });
 
   return (
+    <>
     <Card mb={6}>
       <CardContent>
         <form noValidate onSubmit={handleSubmit}>
@@ -119,7 +136,7 @@ const ContentCard = () => {
                   fullWidth
                   error={touched.Nombre && Boolean(errors.Nombre)}
                   helperText={touched.Nombre && errors.Nombre}
-                />
+                  />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -131,7 +148,7 @@ const ContentCard = () => {
                   fullWidth
                   error={touched.Apellido && Boolean(errors.Apellido)}
                   helperText={touched.Apellido && errors.Apellido}
-                />
+                  />
               </Grid>
               <Grid item xs={12} sm={2}>
                 <TextField
@@ -144,7 +161,7 @@ const ContentCard = () => {
                   fullWidth
                   error={touched.Edad && Boolean(errors.Edad)}
                   helperText={touched.Edad && errors.Edad}
-                />
+                  />
               </Grid>
               <Grid item xs={12} sm={5}>
                 <TextField
@@ -159,7 +176,7 @@ const ContentCard = () => {
                   fullWidth
                   error={touched.Rut && Boolean(errors.Rut)}
                   helperText={touched.Rut && errors.Rut}
-                />
+                  />
               </Grid>
               <Grid item xs={12} sm={5}>
                 <TextField
@@ -174,9 +191,9 @@ const ContentCard = () => {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">+569</InputAdornment>
-                    ),
-                  }}
-                />
+                      ),
+                    }}
+                    />
               </Grid>
               <Grid item sm={12}>
                 <Typography variant="h6" gutterBottom>
@@ -194,7 +211,7 @@ const ContentCard = () => {
                   fullWidth
                   error={touched.Email && Boolean(errors.Email)}
                   helperText={touched.Email && errors.Email}
-                />
+                  />
               </Grid>
               <Grid item xs={12} sm={12}>
                 <TextField
@@ -207,7 +224,7 @@ const ContentCard = () => {
                   fullWidth
                   error={touched.Contrasenia && Boolean(errors.Contrasenia)}
                   helperText={touched.Contrasenia && errors.Contrasenia}
-                />
+                  />
               </Grid>
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -219,15 +236,15 @@ const ContentCard = () => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
-                    id="Area"
-                    label="Área"
+                    id="Tipo"
+                    label="Tipo"
                     value={values.Area}
                     onChange={handleChange}
                     variant="outlined"
                     fullWidth
                     error={touched.Area && Boolean(errors.Area)}
                     helperText={touched.Area && errors.Apellido}
-                  />
+                    />
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
@@ -253,6 +270,16 @@ const ContentCard = () => {
         </form>
       </CardContent>
     </Card>
+    {/* <Dialog open={open} onClose={handleClose}>
+        {" "}
+        {/* son cuadros de dialogos */}
+        {/* <DialogTitle>{"Trabajador Creado"}</DialogTitle> */}
+        {/* <DialogContent>{"Trabajador se ha creado con éxito"}</DialogContent> */}
+        {/* <DialogActions> */}
+          {/* <Button onClick={() => handleClose()}>Aceptar</Button> */}
+        {/* </DialogActions> */}
+      {/* </Dialog> */} 
+</>
   );
 };
 

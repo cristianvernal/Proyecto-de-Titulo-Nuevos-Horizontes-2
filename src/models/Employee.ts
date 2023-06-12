@@ -10,7 +10,7 @@ export interface Employee {
     ApPaterno: string,
     ApMaterno: string,
     Rut: string,
-    Telefono: number,
+    Telefono: string,
     Edad: number,
     Direccion: string,
     CollegeId: string,

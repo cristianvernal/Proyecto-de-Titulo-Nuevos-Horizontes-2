@@ -34,6 +34,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  InputAdornment,
 } from "@material-ui/core";
 import { RootState } from "../../../redux/reducers/rootReducer";
 import { EmployeeState } from "../../../redux/reducers/employeeReducer";
@@ -67,7 +68,7 @@ const TutorForm = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const  handleClose = () => {
     dispatch(setAddEmployeeInital());
     setOpen(false);
     history.push("/trabajadores");
@@ -87,13 +88,14 @@ const TutorForm = () => {
         ApPaterno: "",
         ApMaterno: "",
         Rut: "",
-        Telefono: 0,
+        Telefono: "",
         Edad: 0,
         Direccion: "",
         CollegeId: "",
       },
       onSubmit: (values) => {
         dispatch(AddEmployee(values));
+        values.Telefono = "+569" + values.Telefono;
       },
       validationSchema: yup.object({
         Tipo: yup.string().required("Este campo es obligatorio"),
@@ -112,7 +114,15 @@ const TutorForm = () => {
             return rutUtils.validate(value);
           },
         }),
-        Telefono: yup.number().min(6).required("Este campo es obligatorio"),
+        Telefono: yup.number()
+        .required("Es requerido")
+        .test("len", "Número no válido", (val: any) => {
+          try {
+            return val.toString().length === 8;
+          } catch {
+            return false;
+          }
+        }),
         Edad: yup.number().max(90).required("Este campo es obligatorio"),
         Direccion: yup.string().required("Este campo es obligatorio"),
         CollegeId: yup.string().required("Este campo es requerido"),
@@ -265,6 +275,11 @@ const TutorForm = () => {
                   value={values.Telefono}
                   helperText={touched.Telefono && errors.Telefono}
                   error={touched.Telefono && Boolean(errors.Telefono)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">+569</InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
 

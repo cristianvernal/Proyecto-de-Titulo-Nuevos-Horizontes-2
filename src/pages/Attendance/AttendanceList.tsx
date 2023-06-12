@@ -180,100 +180,6 @@ const ContentCard = () => {
     },
   });
 
-
-
-
-
-  // useEffect(() => {
-  //   const obtenerDatos = async () => {
-  //     try {
-  //       //obtener los datos  del al collecion cursos
-  //       const cursosSnapshot = await db.collection("Cursos").get();
-  //       // Obtener los datos de la colección "estudiantes"
-  //       const estudiantesSnapshot = await db.collection("Estudiantes").get();
-
-  //       const resultadosTemp: any[] = [];
-
-  //       cursosSnapshot.forEach((cursoDoc) => {
-  //         const cursoData = cursoDoc.data();
-
-  //         const estudianteId = cursoData.Student;
-
-  //         const estudianteDoc = estudiantesSnapshot.docs.find(
-  //           (estudianteDoc) => estudianteDoc.id === estudianteId
-  //         );
-
-  //         if (estudianteDoc) {
-  //           const estudianteData = estudianteDoc.data();
-
-  //           if (cursoData.Grado === estudianteData.Nombres) {
-  //             const resultado = {
-  //               cursoId: cursoDoc.id,
-  //               cursoGrado: cursoData.Grado,
-  //               estudianteId: estudianteDoc.id,
-  //               estudianteNombres: estudianteData.Nombres,
-  //               estudianteApellidos: estudianteData.Apellidos,
-  //             };
-
-  //             resultadosTemp.push(resultado);
-  //           }
-  //         }
-  //       });
-
-  //       setResultados(resultadosTemp);
-  //     } catch (error) {
-  //       console.log("Error al obtener datos", error);
-  //     }
-  //   };
-  //   obtenerDatos();
-  // }, []);
-
-
-  // const firebaseConfig = {
-  //   // ...
-  // };
-
-  // const db = firebase.firestore();
-
-  //   useEffect(()=>{
-  //     db.collection("Cursos")
-  //     .get()
-  //     .then((snapshot1) =>{
-  //       db.collection("Estudiantes")
-  //       .get()
-  //       .then((snapshot2) => {
-  //         const resultadoTemp: any[] = [];
-
-  //         snapshot1.forEach((doc1) =>{
-  //           const Grade = doc1.data();
-
-  //           snapshot2.forEach((doc2) =>{
-  //             const Nombres = doc2.data();
-
-  //             if(Grade.Grado === Nombres.Nombres){
-  //               const resultado = {
-  //                 dato1: Grade.Grado,
-  //                 dato2: Nombres.Nombres,
-  //               };
-
-  //               resultadoTemp.push(resultado);
-  //             }
-
-  //           });
-  //         });
-
-  //         setResultados(resultadoTemp);
-
-  //       })
-  //       .catch((error)=> {
-  //         console.log("Error al obtener datos de la coleccion 2: ", error);
-  //       })
-  //     })
-  //     .catch((error)=>{
-  //       console.log("Error al obtener datos de la coleccion 1: ", error)
-  //     })
-  //   }, []);
-
   useEffect(() => {
     dispatch(getStudents());
     dispatch(getMoreStudents());
@@ -296,12 +202,12 @@ const ContentCard = () => {
   return (
     <>
       <Card mb={6}>
-        <FilterSection
+        {/* <FilterSection
           changeOrder={(order) => {
             setSortBy(order);
             handleChangeOrder(order);
           }}
-        />
+        /> */}
         <CardContent>
           <TableContainer className={classes.tableContainer}>
             <Table size="small" stickyHeader>
@@ -378,11 +284,6 @@ const ContentCard = () => {
           />
         </CardContent>
       </Card>
-      <ModalAcademicCharge
-        open={openChargeModal}
-        onClose={handleCloseChargeModal}
-        subjects={subjects}
-      />
         <CardHeader
           action={
             <>
@@ -446,191 +347,6 @@ const ContentCard = () => {
   );
 };
 
-
-const FilterSection: React.FC<filterProps> = ({ changeOrder }) => {
-  const dispatch = useDispatch();
-
-  const [openFilter, setOpenFilters] = useState(false);
-  const [filtersList, setValueFiltersList] = React.useState<any>({});
-  const [valueCreacionStart, setValueCreacionStart] = useState<any>(null);
-  const [valueCreacionEnd, setValueCreacionEnd] = useState<any>(null);
-  const [valueNombre, setValueNombre] = useState("");
-  const [valueApellido, setValueApellido] = useState("");
-  const [valueCargo, setValueCargo] = useState<any>(null);
-
-  const handleChangeNombre = (e: any) => {
-    setValueNombre(e.target.value);
-  };
-  const handleChangeApellido = (e: any) => {
-    setValueApellido(e.target.value);
-  };
-  return (
-    <CardContent>
-      <Grid container justify="space-between">
-        <Grid item>
-          <Button size="large" onClick={() => setOpenFilters(!openFilter)}>
-            Filtros {openFilter ? <ExpandLess /> : <ExpandMore />}
-          </Button>
-        </Grid>
-        <Grid item>
-          <Autocomplete
-            id="orderby"
-            size="small"
-            options={orderByUsers}
-            style={{ width: 170 }}
-            onChange={(event: any, newValue: string | null) => {
-              if (newValue === "Fecha") {
-                changeOrder("FechaCreacion");
-              } else if (newValue === "TipoUsuario") {
-                changeOrder("TipoUsuario");
-              } else {
-                changeOrder("Nombre");
-              }
-            }}
-            renderInput={(params) => (
-              <TextField {...params} label="Ordenar por" variant="outlined" />
-            )}
-          />
-        </Grid>
-      </Grid>
-      <Collapse in={openFilter} timeout="auto" unmountOnExit>
-        <Grid container spacing={1} style={{ marginTop: 20 }}>
-          <Grid item xs={12} sm={2}>
-            <TextField
-              id="outlined-basic"
-              size="small"
-              label="Nombre"
-              variant="outlined"
-              fullWidth
-              value={valueNombre}
-              onChange={handleChangeNombre}
-              onKeyPress={(ev) => {
-                if (ev.key === "Enter") {
-                  filtersList["Nombre"] = cleanString(valueNombre);
-
-                  if (!valueNombre) {
-                    delete filtersList["Nombre"];
-                  }
-
-                  if (Object.keys(filtersList).length > 0) {
-                    dispatch(getUsersFiltered(filtersList));
-                  } else {
-                    dispatch(getUsers());
-                  }
-
-                  ev.preventDefault();
-                }
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={2}>
-            <TextField
-              id="outlined-basic"
-              size="small"
-              label="Apellido"
-              variant="outlined"
-              fullWidth
-              value={valueApellido}
-              onChange={handleChangeApellido}
-              onKeyPress={(ev) => {
-                if (ev.key === "Enter") {
-                  filtersList["Apellido"] = cleanString(valueApellido);
-
-                  if (!valueApellido) {
-                    delete filtersList["Apellido"];
-                  }
-
-                  if (Object.keys(filtersList).length > 0) {
-                    dispatch(getUsersFiltered(filtersList));
-                  } else {
-                    dispatch(getUsers());
-                  }
-
-                  ev.preventDefault();
-                }
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={2}>
-            <TextField
-              id="creacion-start"
-              label="Fecha Creación: Inicio"
-              size="small"
-              type="datetime-local"
-              value={valueCreacionStart}
-              onChange={(event) => {
-                setValueCreacionStart(event.target.value);
-                filtersList["endAt"] = event.target.value;
-              }}
-              fullWidth
-              variant="outlined"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={2}>
-            <TextField
-              id="creacion-start"
-              label="Fecha Creación: Final"
-              size="small"
-              type="datetime-local"
-              value={valueCreacionEnd}
-              onChange={(event) => {
-                setValueCreacionEnd(event.target.value);
-                filtersList["startAt"] = event.target.value;
-              }}
-              fullWidth
-              variant="outlined"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={1}>
-            <Box display="flex">
-              <Box mt={1} order={1}>
-                <Tooltip title="Buscar">
-                  <IconButton
-                    size="small"
-                    aria-label="Filtrar"
-                    onClick={() => {
-                      if (valueNombre) {
-                        filtersList["Nombre"] = valueNombre;
-                      }
-                      // if (valueCreacionStart && valueCreacionEnd) {
-                      dispatch(getUsersFiltered(filtersList));
-                      // }
-                    }}
-                  >
-                    <Search />
-                  </IconButton>
-                </Tooltip>
-              </Box>
-              <Box mt={1} order={2}>
-                <Tooltip title="Limpiar">
-                  <IconButton
-                    size="small"
-                    aria-label="Borrar filtro"
-                    onClick={() => {
-                      setValueNombre("");
-                      setValueCreacionStart("");
-                      setValueCreacionEnd("");
-                      setValueFiltersList({});
-                      dispatch(getUsers());
-                    }}
-                  >
-                    <MinusSquare />
-                  </IconButton>
-                </Tooltip>
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
-      </Collapse>
-    </CardContent>
-  );
-};
 export const AttendanceList = () => {
   return (
     <React.Fragment>
