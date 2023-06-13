@@ -26,6 +26,10 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  DialogContentText,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { green, red } from "@material-ui/core/colors";
@@ -82,16 +86,15 @@ import {
   StudentState,
   studentReducer,
 } from "../../redux/reducers/studentReducer";
-import { Student } from '../../models/Student';
+import { Student } from "../../models/Student";
 import { Attendance } from "../../models/Attendance";
 import { margin } from "polished";
 import { getGrades, getMoreGrades } from "../../redux/actions/gradeActions";
 import { GradeState } from "../../redux/reducers/gradeReducer";
 import { Grade } from "../../models/Grade";
-import { useParams } from 'react-router-dom';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-
+import { useParams } from "react-router-dom";
+import firebase from "firebase/app";
+import "firebase/firestore";
 
 const Card = styled(MuiCard)(spacing);
 
@@ -100,7 +103,6 @@ const Divider = styled(MuiDivider)(spacing);
 const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
 const orderByUsers = ["Nombre", "Fecha", "Tipo usuario"];
-
 
 interface filterProps {
   changeOrder: (value: any) => void;
@@ -119,45 +121,22 @@ const ContentCard = () => {
   const [currentFilter, setCurrentFilter] = useState<any>({});
   const [openChargeModal, setOpenChargeModal] = useState(false);
   const [subjects, setSubjects] = useState([]);
+  const [open, setOpen] = React.useState(false);
   const [selectedAsistencia, setSelectedAsistencia] = useState("");
   const [resultados, setResultados] = useState<any[]>([]);
- 
+  const [attendanceRecords, setAttendanceRecords] = useState<
+    AttendanceRecord[]
+  >([]);
 
-  const handleOpenChargeModal = (data: any) => {
-    setSubjects(data);
-    setOpenChargeModal(true);
+
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
-  const handleCloseChargeModal = () => {
-    setOpenChargeModal(false);
+  const handleClose = () => {
+    setOpen(false);
+    history.push("/libroDeClases");
   };
-
-  const handleOpenConfirm = () => {
-    setOpenConfirm(true);
-  };
-
-  const handleOpenDeleteModal = (selected: any) => {
-    setSelected(selected);
-    setOpenDeleteModal(true);
-  };
-
-  const handleOpenCreateModal = () => {
-    setOpenCreateEditModal(true);
-  };
-
-  const handleDelete = (selected: any) => {
-    dispatch(deleteEmployee(selected));
-    setOpenDeleteModal(false);
-  };
-  const handleCloseDeleteModal = () => {
-    setOpenDeleteModal(false);
-  };
-
-  const handleCloseConfirm = () => {
-    dispatch(setDeleteEmployeeInital());
-    setOpenConfirm(false);
-  };
-
   //Funcion para ir a editar
 
   const handleChangeOrder = (order: any) => {
@@ -183,7 +162,6 @@ const ContentCard = () => {
   useEffect(() => {
     dispatch(getStudents());
     dispatch(getMoreStudents());
-    
   }, []);
 
   const {
@@ -193,12 +171,63 @@ const ContentCard = () => {
     delete: { state: deleteState },
   } = useSelector<RootState, StudentState>((state) => state.studentReducer);
 
-  useEffect(() => {
-    if (deleteState === FormState.Success) {
-      handleOpenConfirm();
+  interface AttendanceRecord {
+    studentId: string;
+    attendance: "Presente" | "Ausente";
+    justification?: string;
+  }
+
+  const handleAttendanceChange = (
+    studentId: string,
+    attendance: "Presente" | "Ausente"
+  ) => {
+    const existingRecordIndex = attendanceRecords.findIndex(
+      (record) => record.studentId === studentId
+    );
+
+    if (existingRecordIndex !== -1) {
+      const updatedRecords = [...attendanceRecords];
+      updatedRecords[existingRecordIndex].attendance = attendance;
+      setAttendanceRecords(updatedRecords);
+    } else {
+      setAttendanceRecords((prevRecords) => [
+        ...prevRecords,
+        { studentId, attendance },
+      ]);
     }
-  }, [deleteState]);
-  /* console.log(employees); */
+  };
+
+  const handleJustificationChange = (
+    studentId: string,
+    justification: string
+  ) => {
+    const existingRecordIndex = attendanceRecords.findIndex(
+      (record) => record.studentId === studentId
+    );
+
+    if (existingRecordIndex !== -1) {
+      const updatedRecords = [...attendanceRecords];
+      updatedRecords[existingRecordIndex].justification = justification;
+      setAttendanceRecords(updatedRecords);
+    } else {
+      setAttendanceRecords((prevRecords) => [
+        ...prevRecords,
+        { studentId, attendance: "Ausente", justification },
+      ]);
+    }
+  };
+
+  const renderAttendanceForm = (student: Student) => {
+    const record = attendanceRecords.find(
+      (record) => record.studentId === student.id
+    );
+  };
+  // useEffect(() => {
+  //   if (deleteState === FormState.Success) {
+  //     handleOpenConfirm();
+  //   }
+  // }, [deleteState]);
+
   return (
     <>
       <Card mb={6}>
@@ -214,7 +243,7 @@ const ContentCard = () => {
               <TableHead>
                 <TableRow>
                   <TableCell align="left">Estudiante</TableCell>
-                  <TableCell align="center">Asistencia</TableCell>
+                  <TableCell align="left">Asistencia</TableCell>
                   <TableCell align="center">Justificacion</TableCell>
                 </TableRow>
               </TableHead>
@@ -231,41 +260,38 @@ const ContentCard = () => {
                         <TableRow hover className={classes.styledRow}>
                           <TableCell align="left">{`${data?.Nombres}  ${data?.Apellidos}`}</TableCell>
                           <TableCell align="center">
-                            <input
-                              type="radio"
+                          <RadioGroup
+                            row
+                            aria-labelledby="demo-row-radio-buttons-group-label"
+                            name="row-radio-buttons-group"
+                            >
+                            <FormControlLabel
                               value="Presente"
-                              name="Asistencia"
-                              checked={selectedAsistencia === "Presente"}
-                              onChange={() => setSelectedAsistencia("Presente")}
-                            />{" "}
-                            Presente
-                            <input
-                              type="radio"
-                              value="Ausente"
-                              name="Asistencia"
-                              checked={selectedAsistencia === "Ausente"}
-                              onChange={() => setSelectedAsistencia("Ausente")}
-                            />{" "}
-                            Ausente
-                          </TableCell>
-                          {/* <TableCell align="center">{data?.Telefono}</TableCell> */}
-                          <TableCell align="center">
-                          <TextField
-                                type="text"
-                                autoFocus
-                                label="Justificacion"
-                                id="Justificacion"
-                                size="small"
-                                style={{
-                                  width: 200,
-                              
-                                }}
-                                variant="outlined"
-                                // value={values.Horas}
-                                // onChange={handleChange}
-                                // error={touched.Horas && Boolean(errors.Horas)}
-                                // helperText={touched.Horas && errors.Horas}
+                              control={<Radio />}
+                              label="Presente"
                               />
+                            <FormControlLabel
+                              value="Ausente"
+                              control={<Radio />}
+                              label="Ausente"
+                              />
+                          </RadioGroup>
+                              </TableCell>
+                          <TableCell align="center">
+                            <TextField
+                              type="text"
+                              autoFocus
+                              id="Justificacion"
+                              size="small"
+                              style={{
+                                width: 200,
+                              }}
+                              variant="outlined"
+                              // value={values.Horas}
+                              // onChange={handleChange}
+                              // error={touched.Horas && Boolean(errors.Horas)}
+                              // helperText={touched.Horas && errors.Horas}
+                            />
                           </TableCell>
                         </TableRow>
                       </Fade>
@@ -284,63 +310,44 @@ const ContentCard = () => {
           />
         </CardContent>
       </Card>
-        <CardHeader
-          action={
-            <>
-              <Button
-                
-                style={{
-                  backgroundColor: "#007ac9",
-                  color: "#fff",
-                  marginInlineEnd: 20,
-                  marginLeft: 10,
-                }}
-                // onClick={() => {
-                //   history.push("/trabajadores/Crear");
-                // }}
-              >
-                Guardar Asistencia
-              </Button>
-            </>
-          }
-        />
-      <Dialog open={openDeleteModal} onClose={handleCloseDeleteModal}>
+      <CardHeader
+        action={
+          <>
+            <Button
+              style={{
+                backgroundColor: "#007ac9",
+                color: "#fff",
+                marginInlineEnd: 20,
+                marginLeft: 10,
+              }}
+              onClick={handleClickOpen}
+            >
+              Guardar Asistencia
+            </Button>
+          </>
+        }
+      />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
         {" "}
         {/* son cuadros de dialogos */}
-        <DialogTitle>{"Eliminar trabajador"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          {"Asistencia guardada"}
+        </DialogTitle>
         <DialogContent>
-          {"¿Está seguro que desea eliminar el trabajador?"}
-        </DialogContent>
-        <Box display={"flex"} justifyContent={"end"}>
-          <DialogActions>
-            <Button
-              variant="contained"
-              color={"primary"}
-              onClick={() => handleDelete(selected)}
-            >
-              Aceptar
-            </Button>
-          </DialogActions>
-          <DialogActions>
-            <Button
-              variant="contained"
-              color={"default"}
-              onClick={() => handleCloseDeleteModal()}
-            >
-              Cancelar
-            </Button>
-          </DialogActions>
-        </Box>
-      </Dialog>
-      <Dialog open={openConfirm} onClose={handleCloseConfirm}>
-        {" "}
-        {/* son cuadros de dialogos */}
-        <DialogTitle>{"Trabajador Eliminado"}</DialogTitle>
-        <DialogContent>
-          {"El trabajador se ha eliminado con éxito"}
+          <DialogContentText id="alert-dialog-description">
+            <h6>La asistencia han sido guardada exitosamente</h6>
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handleCloseConfirm()}>Aceptar</Button>
+          
+          <Button onClick={handleClose} autoFocus>
+            Aceptar
+          </Button>
         </DialogActions>
       </Dialog>
     </>

@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store/index";
 import "./mocks";
 import "./firebase/firebase";
+import "bootstrap/dist/css/bootstrap.min.css"
 
 ReactDOM.render(
   <Provider store={store}>

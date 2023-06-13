@@ -31,6 +31,7 @@ interface Alumno {
   arancelMensual: number;
 }
 
+
 function PaginaAlumno() {
   const [alumno, setAlumno] = useState<Alumno>({
     matriculaPagada: false,

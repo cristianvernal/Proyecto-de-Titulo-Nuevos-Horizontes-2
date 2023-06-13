@@ -30,6 +30,7 @@ import {
   Select,
   FormHelperText,
   MenuItem,
+  DialogContentText,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { green, red } from "@material-ui/core/colors";
@@ -95,7 +96,7 @@ import { Grade } from "../../models/Grade";
 import { useParams } from "react-router-dom";
 import { Asignaturas } from "/Users/Crist/OneDrive/Escritorio/Proyecto de Titulo Nuevos Horizontes/src/constants/Asignaturas.json";
 import { AsignGrade } from "../../models/AsignGrade";
-
+import { AsignGradeState, asignGradeReducer } from "../../redux/reducers/asignGradeReducer";
 
 const Card = styled(MuiCard)(spacing);
 
@@ -116,53 +117,22 @@ const ContentCard = () => {
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [selected, setSelected] = useState<any | null>(null);
-
   const [currentFilter, setCurrentFilter] = useState<any>({});
   const [openChargeModal, setOpenChargeModal] = useState(false);
   const [subjects, setSubjects] = useState([]);
-  const [notas, setNotas] = useState<string[]>([]);
-  const [nota1, setNota1] = useState<string>('');
-  const [nota2, setNota2] = useState<string>('');
-  const [nota3, setNota3] = useState<string>('');
-  const [nota4, setNota4] = useState<string>('');
-  const [promedio, setPromedio] = useState<number>(0);
-  
+  const [open, setOpen] = React.useState(false);
+  const [notas, setNotas] = useState<{ [studentId: string]: string[] }>({});
+  const [promedios, setPromedios] = useState<{ [studentId: string]: number }>(
+    {}
+  );
 
- 
-
-  const handleOpenChargeModal = (data: any) => {
-    setSubjects(data);
-    setOpenChargeModal(true);
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
-  const handleCloseChargeModal = () => {
-    setOpenChargeModal(false);
-  };
-
-  const handleOpenConfirm = () => {
-    setOpenConfirm(true);
-  };
-
-  const handleOpenDeleteModal = (selected: any) => {
-    setSelected(selected);
-    setOpenDeleteModal(true);
-  };
-
-  const handleOpenCreateModal = () => {
-    setOpenCreateEditModal(true);
-  };
-
-  const handleDelete = (selected: any) => {
-    dispatch(deleteEmployee(selected));
-    setOpenDeleteModal(false);
-  };
-  const handleCloseDeleteModal = () => {
-    setOpenDeleteModal(false);
-  };
-
-  const handleCloseConfirm = () => {
-    dispatch(setDeleteEmployeeInital());
-    setOpenConfirm(false);
+  const handleClose = () => {
+    setOpen(false);
+    history.push("/libroDeClases");
   };
 
   //Funcion para ir a editar
@@ -187,64 +157,53 @@ const ContentCard = () => {
     },
   });
 
-  
   useEffect(() => {
     dispatch(getStudents());
     dispatch(getMoreStudents());
   }, []);
-  
+
   const {
     students,
     state,
     totalDocs,
     delete: { state: deleteState },
   } = useSelector<RootState, StudentState>((state) => state.studentReducer);
-  
 
-  useEffect(() => {
-    if (deleteState === FormState.Success) {
-      handleOpenConfirm();
-    }
-  }, [deleteState]);
+  // useEffect(() => {
+  //   if (deleteState === FormState.Success) {
+  //     handleOpenConfirm();
+  //   }
+  // }, [deleteState]);
 
-  function handleNotaChange(notaIndex: number, value: string) {
-    const nuevasNotas = [...notas]; 
-     nuevasNotas[notaIndex] = value;
-    if (notaIndex === 0) {
-      setNota1(value);
-    } else if (notaIndex === 1) {
-      setNota2(value);
-    } else if (notaIndex === 2) {
-      setNota3(value);
-    } else if (notaIndex === 3) {
-      setNota4(value);
-    }
-    
+  const handleNotaChange = (
+    studentId: string,
+    notaIndex: number,
+    value: string
+  ) => {
+    const nuevasNotas = { ...notas };
+    nuevasNotas[studentId] = [
+      ...(nuevasNotas[studentId] || []),
+      "",
+      "",
+      "",
+      "",
+    ]; // Inicializar con 4 notas vacías
+    nuevasNotas[studentId][notaIndex] = value;
     setNotas(nuevasNotas);
 
-    const notasNumeros = notas.map((nota) => parseFloat(nota));
-    const sumaNotas = notasNumeros.reduce((total, nota) => total + nota, 0);
-    const nuevoPromedio = sumaNotas / notasNumeros.length;
-    
-    setNota1(notas[0]);
-    setNota2(notas[1]);
-    setNota3(notas[2]);
-    setNota4(notas[3]);
-    setPromedio(nuevoPromedio);
-    
+    const notasNumeros = nuevasNotas[studentId].map((nota) => parseFloat(nota));
+    const notasValidas = notasNumeros.filter((nota) => !isNaN(nota)); // Filtrar notas válidas (numéricas)
+    const sumaNotas = notasValidas.reduce((total, nota) => total + nota, 0);
+    const nuevoPromedio = sumaNotas / notasValidas.length;
+
+    const nuevosPromedios = { ...promedios };
+    nuevosPromedios[studentId] = nuevoPromedio;
+    setPromedios(nuevosPromedios);
   };
-  // const calcularPromedio = () => {
-  //   const notas = [nota1, nota2, nota3, nota4];
-  //   const notasNumeros = notas.map((nota) => parseFloat(nota));
-  //   const sumaNotas = notasNumeros.reduce((total, nota) => total + nota, 0);
-  //   const nuevoPromedio = sumaNotas / notasNumeros.length;
-  //   setPromedio(nuevoPromedio);
-  // };
-  
+
   return (
     <>
-     
-      <Card mb={6}>      
+      <Card mb={6}>
         <CardContent>
           <TableContainer className={classes.tableContainer}>
             <Table size="small" stickyHeader>
@@ -273,14 +232,15 @@ const ContentCard = () => {
                           <TableCell
                             align="left"
                             style={{ width: 250 }}
-                          >{`${data?.Nombres}  ${data?.Apellidos}`}</TableCell>
+                          >{`${data.Nombres}  ${data.Apellidos}`}
+                          </TableCell>
                           <TableCell align="right">
                             <FormControl fullWidth={true} size="small">
                               <Select
                                 id="Asignaturas"
                                 autoComplete="on"
                                 autoFocus
-                                name="Asignaturas"                                
+                                name="Asignaturas"
                                 style={{ width: 170 }}
                                 variant="outlined"
                                 onChange={(e) => {
@@ -299,80 +259,39 @@ const ContentCard = () => {
                               </Select>
                             </FormControl>
                           </TableCell>
+                          {Array.from({ length: 4 }).map((_, index) => (
+                            <TableCell align="center" key={index}>
+                              <TextField
+                                type="text"
+                                autoFocus
+                                id={`Nota-${index + 1}-${data.id}`}
+                                size="small"
+                                style={{
+                                  width: 80,
+                                }}
+                                variant="outlined"
+                                value={notas[data.id]?.[index] || ""}
+                                onChange={(e) =>
+                                  handleNotaChange(
+                                    data.id,
+                                    index,
+                                    e.target.value
+                                  )
+                                }
+                              />
+                            </TableCell>
+                          ))}
                           <TableCell align="center">
                             <TextField
                               type="text"
                               autoFocus
-                              
-                              id="Nota 1"
+                              id={`Promedio-${data.id}`}
                               size="small"
                               style={{
                                 width: 80,
                               }}
                               variant="outlined"
-                              value={nota1} 
-                              onChange={(e) => handleNotaChange(0, e.target.value)}
-                            />
-                          </TableCell>
-                          <TableCell align="center">
-                            <TextField
-                              type="text"
-                              autoFocus
-                              
-                              id="Nota 2"
-                              size="small"
-                              style={{
-                                width: 80,
-                              }}
-                              variant="outlined"
-                              value={nota2} 
-                              onChange={(e) => handleNotaChange(1, e.target.value)}
-                              
-                            />
-                          </TableCell>
-                          <TableCell align="center">
-                            <TextField
-                              type="text"
-                              autoFocus
-                              
-                              id="Nota 3"
-                              size="small"
-                              style={{
-                                width: 80,
-                              }}
-                              variant="outlined"
-                              value={nota3} 
-                              onChange={(e) => handleNotaChange(2, e.target.value)}
-                            />
-                          </TableCell>
-                          <TableCell align="center">
-                            <TextField
-                              type="text"
-                              autoFocus
-                              
-                              id="Nota 4"
-                              size="small"
-                              style={{
-                                width: 80,
-                              }}
-                              variant="outlined"
-                              value={nota4} 
-                              onChange={(e) => handleNotaChange(3, e.target.value)}
-                            />
-                          </TableCell>
-                          
-                          <TableCell align="center">
-                            <TextField
-                              type="text"
-                              autoFocus
-                              id="Promedio"
-                              size="small"
-                              style={{
-                                width: 80,
-                              }}
-                              variant="outlined"
-                              value={promedio} 
-                              
+                              value={promedios[data.id] || ""}
                             />
                           </TableCell>
                         </TableRow>
@@ -393,62 +312,46 @@ const ContentCard = () => {
         </CardContent>
       </Card>
       <CardHeader
-          action={
-            <>
-              <Button
-                
-                style={{
-                  backgroundColor: "#007ac9",
-                  color: "#fff",
-                  marginInlineEnd: 20,
-                  marginLeft: 10,
-                }}
-                // onClick={() => {
-                //   history.push("/trabajadores/Crear");
-                // }}
-              >
-                Guardar Notas
-              </Button>
-            </>
-          }
-        />
-      <Dialog open={openDeleteModal} onClose={handleCloseDeleteModal}>
+        action={
+          <>
+            <Button
+              style={{
+                backgroundColor: "#007ac9",
+                color: "#fff",
+                marginInlineEnd: 20,
+                marginLeft: 10,
+              }}
+              // onClick={() => {
+              //   history.push("/trabajadores/Crear");
+              // }}
+              onClick={handleClickOpen}
+            >
+              Guardar Notas
+            </Button>
+          </>
+        }
+      />
+       <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
         {" "}
         {/* son cuadros de dialogos */}
-        <DialogTitle>{"Eliminar trabajador"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          {"Notas Guardadas"}
+        </DialogTitle>
         <DialogContent>
-          {"¿Está seguro que desea eliminar el trabajador?"}
-        </DialogContent>
-        <Box display={"flex"} justifyContent={"end"}>
-          <DialogActions>
-            <Button
-              variant="contained"
-              color={"primary"}
-              onClick={() => handleDelete(selected)}
-            >
-              Aceptar
-            </Button>
-          </DialogActions>
-          <DialogActions>
-            <Button
-              variant="contained"
-              color={"default"}
-              onClick={() => handleCloseDeleteModal()}
-            >
-              Cancelar
-            </Button>
-          </DialogActions>
-        </Box>
-      </Dialog>
-      <Dialog open={openConfirm} onClose={handleCloseConfirm}>
-        {" "}
-        {/* son cuadros de dialogos */}
-        <DialogTitle>{"Trabajador Eliminado"}</DialogTitle>
-        <DialogContent>
-          {"El trabajador se ha eliminado con éxito"}
+          <DialogContentText id="alert-dialog-description">
+            <h6>Las notas han sido guardadas exitosamente</h6>
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handleCloseConfirm()}>Aceptar</Button>
+          
+          <Button onClick={handleClose} autoFocus>
+            Aceptar
+          </Button>
         </DialogActions>
       </Dialog>
     </>

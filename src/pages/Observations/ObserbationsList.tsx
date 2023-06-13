@@ -31,6 +31,7 @@ import {
   FormHelperText,
   MenuItem,
   Input,
+  DialogContentText,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { green, red } from "@material-ui/core/colors";
@@ -120,27 +121,23 @@ const ContentCard = () => {
   
   
   
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
 
-  const handleOpen = () => {
+  const handleClickOpen = () => {
     setOpen(true);
   };
-
-  const handleOpenConfirm = () => {
-    setOpen(true);
-  };
-
+  
   const handleClose = () => {
     dispatch(setAddObservationInital());
     setOpen(false);
     history.push("/libroDeClases");
   };
 
-  useEffect(() => {
-    if (add?.state === FormState.Success) {
-      handleOpen();
-    }
-  }, [add?.state]);
+  // useEffect(() => {
+  //   if (add?.state === FormState.Success) {
+  //     handleOpen();
+  //   }
+  // }, [add?.state]);
 
   const { handleSubmit, values, handleChange, touched, errors } = useFormik<
     Partial<Observation>
@@ -213,11 +210,11 @@ const ContentCard = () => {
     });
   };
 
-  useEffect(() => {
-    if (deleteState === FormState.Success) {
-      handleOpenConfirm();
-    }
-  }, [deleteState]);
+  // useEffect(() => {
+  //   if (deleteState === FormState.Success) {
+  //     handleOpenConfirm();
+  //   }
+  // }, [deleteState]);
   /* console.log(employees); */
   return (
     <>
@@ -306,19 +303,6 @@ const ContentCard = () => {
                             }
                           />
                         </TableCell>
-                        <TableCell>
-                          <Button
-                            type="submit"
-                            variant="contained"
-                            style={{
-                              backgroundColor: "#007ac9",
-                              color: "#fff",
-                              marginLeft: 6,
-                            }}
-                          >
-                            Guardar
-                          </Button>
-                        </TableCell>
                       </TableRow>
                     </Fade>
                   ))}
@@ -328,16 +312,43 @@ const ContentCard = () => {
           </form>
         </CardContent>
       </Card>
-
-      <Dialog open={open} onClose={handleClose}>
+      <CardHeader
+        action={
+          <>
+            <Button
+              style={{
+                backgroundColor: "#007ac9",
+                color: "#fff",
+                marginInlineEnd: 20,
+                marginLeft: 10,
+              }}  
+              onClick={handleClickOpen}
+              // onClick={() => {
+              //   history.push("/trabajadores/Crear");
+              // }}
+            >
+              Guardar Notas
+            </Button>
+          </>
+        }
+      />
+      <Dialog open={open} onClose={handleClose}aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
         {" "}
         {/* son cuadros de dialogos */}
-        <DialogTitle>{"Observaciones Agregadas"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          {"Observaciones Guardadas"}
+        </DialogTitle>
         <DialogContent>
-          {"Las observaciones se han agregado con éxito"}
+          <DialogContentText id="alert-dialog-description">
+            <h6>Las observaciones han sido guardadas</h6>
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handleClose()}>Aceptar</Button>
+          
+          <Button onClick={handleClose} autoFocus>
+            Aceptar
+          </Button>
         </DialogActions>
       </Dialog>
     </>

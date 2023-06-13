@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import { College } from "./College";   
 import { Grade } from "./Grade";
 import { Tutor } from "./Tutor";
+import { AsignGrade } from "./AsignGrade";
 
 
 type Timestamp = firebase.firestore.Timestamp;
@@ -25,18 +26,12 @@ export interface Student {
     StudentGrade?: Student;
     FechaCreacion: Timestamp,
     observaciones: Observacion,
-    Notas: Nota,
+    AsignGradeData: AsignGrade[],
+    
 }
 
     interface Observacion {
     enfermedades: string;
     discapacidad: string;
     otros: string;
-    }
-
-    interface Nota{
-        nota1: string,
-        nota2: string,
-        nota3: string,
-        nota4: string,
     }

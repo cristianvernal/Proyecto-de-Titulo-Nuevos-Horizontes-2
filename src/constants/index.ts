@@ -365,7 +365,7 @@ export const ATTENDANCES_ADD_SUBMITING = "[Attendance] add submiting";
 export const ATTENDANCES_ADD_SUCCESS   = "[Attendance] add success";
 export const ATTENDANCES_ADD_FAILURE   = "[Attendance] add failures";
 
-//ATTENDANCE
+//AsignGrades
 
 export const ASIGNGRADES_GET_SUBMITING = "[AsignGrades] get submiting";
 export const ASIGNGRADES_GET_FAILURE   = "[AsignGrades] get failure";

@@ -60,6 +60,7 @@ import { StudentAdminForm, createStudentAdminForm } from "../pages/StudentAdmin/
 import { NewUser } from "../pages/Users/NewUser";
 import {ObservationsList} from "../pages/Observations/ObserbationsList";
 import {TuitionList} from "../pages/Tuition/TuitionList";
+import { IndexList } from "../pages/IndexList";
 
 
 
@@ -101,6 +102,15 @@ const CollegeRoutes = {
   icon: <Apartment />,
   guard: AuthGuard,
   component: CollegeList,
+  children: null,
+};
+
+const IndexRoutes = {
+  id: "Inicio",
+  path: "/inicio",
+  icon: <Apartment />,
+  guard: AuthGuard,
+  component: IndexList,
   children: null,
 };
 
@@ -406,6 +416,7 @@ const authRoutes = {
 };
 
 // Routes using the Auth layout
+// export const IndexListRoutes = [IndexRoutes];
 export const authLayoutRoutes = [authRoutes];
 
 // Todas las rutas creadas deben ser protegidas
@@ -434,6 +445,7 @@ export const protectedRoutes = [
   AsignGradeRoutes,
   ObservationsRoutes,
   MatriculaRoutes,
+  IndexRoutes,
 ];
 
 // Routes visible in the sidebar
@@ -447,4 +459,5 @@ export const sidebarRoutes = [
   ClassBookRoutes,
   ScheduleRoutes, // horarios
   MatriculaRoutes,
+  IndexRoutes,
 ];
