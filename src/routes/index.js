@@ -459,5 +459,5 @@ export const sidebarRoutes = [
   ClassBookRoutes,
   ScheduleRoutes, // horarios
   MatriculaRoutes,
-  IndexRoutes,
+  // IndexRoutes,
 ];

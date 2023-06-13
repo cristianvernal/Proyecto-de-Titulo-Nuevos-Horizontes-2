@@ -28,7 +28,7 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { green, red } from "@material-ui/core/colors";
-import { CalendarToday, Edit, ExpandLess, ExpandMore } from "@material-ui/icons";
+import { CalendarToday, Edit, ExpandLess, ExpandMore, Visibility } from "@material-ui/icons";
 import { Autocomplete } from "@material-ui/lab";
 import { spacing } from "@material-ui/system";
 import React, { useEffect, useState } from "react";
@@ -235,13 +235,13 @@ const ContentCard = () => {
                                   <CalendarToday />
                                 </IconButton>
                               </Tooltip>
-                              <Tooltip title="Editar">
+                              <Tooltip title="Ver">
                                 <IconButton
                                   color="primary"
                                   size="small"
                                   onClick={() => history.push(`/cursosHorario/${data.id}/Editar`)}
                                 >
-                                  <Edit />
+                                  <Visibility />
                                 </IconButton>
                               </Tooltip>
                             </Box>
