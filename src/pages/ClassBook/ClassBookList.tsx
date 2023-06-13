@@ -382,7 +382,7 @@ const ContentCard = () => {
 export const ClassBookList = () => {
   return (
     <React.Fragment>
-      <Helmet title="Trabajadores" />
+      <Helmet title="Libro de Clases" />
       <Typography variant="h3" gutterBottom display="inline">
         Libro de Clases
       </Typography>

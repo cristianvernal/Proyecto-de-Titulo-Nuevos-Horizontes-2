@@ -340,7 +340,7 @@ const ContentCard = () => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <h6>La asistencia han sido guardada exitosamente</h6>
+            <h6>La asistencia ha sido guardada exitosamente</h6>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
