@@ -92,7 +92,7 @@ export function validateSession(): AppThunk {
           }
         }
       } else {
-        // dispatch(openSnack("Usuario no encontrado", SnackState.ERROR));
+        dispatch(openSnack("Usuario no encontrado", SnackState.ERROR));
         dispatch({
           type: types.AUTH_SIGN_OUT,
         });
