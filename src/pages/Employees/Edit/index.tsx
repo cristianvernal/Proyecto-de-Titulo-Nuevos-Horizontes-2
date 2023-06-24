@@ -307,12 +307,12 @@ export const editEmployeeForm = () => {
     <React.Fragment>
       <Helmet title="Trabajadores" />
       <Typography variant="h3" gutterBottom display="inline">
-        Lista de Trabajadores
+        Editar Trabajador
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
         <Link component={NavLink} exact to="/trabajadores">
-          Lista de Trabajadores
+          Trabajadores
         </Link>
         <Typography>Editar trabajadores</Typography>
       </Breadcrumbs>

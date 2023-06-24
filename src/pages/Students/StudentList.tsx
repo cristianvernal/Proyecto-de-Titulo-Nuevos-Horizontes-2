@@ -285,11 +285,11 @@ export const StudentList = () => {
     <React.Fragment>
       <Helmet title="Estudiantes" />
       <Typography variant="h3" gutterBottom display="inline">
-        Lista de Estudiantes
+        Estudiantes
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-        <Typography>Lista de Estudiantes</Typography>
+        <Typography>Estudiantes</Typography>
       </Breadcrumbs>
 
       <Divider my={6} />

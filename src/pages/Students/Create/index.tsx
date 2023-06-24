@@ -335,12 +335,12 @@ export const createStudentForm = () => {
     <React.Fragment>
       <Helmet title="Estudiantes" />
       <Typography variant="h3" gutterBottom display="inline">
-        Lista de Estudiantes
+        Crear Estudiantes
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
         <Link component={NavLink} exact to="/estudiantes">
-          Lista de Estudiantes
+          Estudiantes
         </Link>
         <Typography>Crear estudiante</Typography>
       </Breadcrumbs>

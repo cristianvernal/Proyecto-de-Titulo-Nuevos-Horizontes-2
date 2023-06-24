@@ -359,11 +359,11 @@ export const SubjectList = () => {
     <React.Fragment>
       <Helmet title="Asignaturas" />
       <Typography variant="h3" gutterBottom display="inline">
-        Lista de Asignaturas
+        Asignaturas
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-        <Typography>Lista de Asignaturas</Typography>
+        <Typography>Asignaturas</Typography>
       </Breadcrumbs>
 
       <Divider my={6} />

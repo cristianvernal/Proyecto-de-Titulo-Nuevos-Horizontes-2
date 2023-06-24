@@ -376,11 +376,11 @@ export const GradeList = () => {
     <React.Fragment>
       <Helmet title="Cursos" />
       <Typography variant="h3" gutterBottom display="inline">
-        Lista de Cursos
+        Cursos
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-        <Typography>Lista de Cursos</Typography>
+        <Typography>Cursos</Typography>
       </Breadcrumbs>
 
       <Divider my={6} />
